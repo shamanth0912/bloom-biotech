@@ -8,7 +8,7 @@ import { site } from "@/lib/site";
 const news = Newsreader({
   variable: "--font-news",
   subsets: ["latin"],
-  styles: ["normal", "italic"],
+  style: ["normal", "italic"],
 });
 
 const plex = IBM_Plex_Sans({
