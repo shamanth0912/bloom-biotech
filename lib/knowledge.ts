@@ -27,7 +27,7 @@ export function companyKnowledge(): KnowledgeChunk[] {
       id: "licence",
       title: "ICAR-IIHR licence",
       href: "/products/arka-microbial-consortium",
-      text: `Bloom Biotech is listed on ICAR-IIHR active technology licences for Arka Microbial Consortium (solid and liquid), contact name Suhas Mohan, Chikkamagaluru. AMC is an all-in-one inoculant: nitrogen-fixing, phosphorus and zinc solubilizing, and plant-growth promoting microbes. IIHR notes 5–15% vegetable yield gains and 25–30% lower N and P fertiliser need. Typical use: 10–20 g per 100–200 g seed; 1 kg AMC per tonne coco-peat; 20 g/L root-zone drench; 5 kg with 500 kg FYM per acre.`,
+      text: `Bloom Biotech is listed on ICAR-IIHR active technology licences for Arka Microbial Consortium (solid and liquid), contact name Suhas Mohan, Chikkamagaluru. AMC is an all-in-one inoculant: nitrogen-fixing, phosphorus and zinc solubilizing, and plant-growth promoting microbes. IIHR notes 5-15% vegetable yield gains and 25-30% lower N and P fertiliser need. Typical use: 10-20 g per 100-200 g seed; 1 kg AMC per tonne coco-peat; 20 g/L root-zone drench; 5 kg with 500 kg FYM per acre.`,
     },
     {
       id: "audiences",
@@ -39,7 +39,7 @@ export function companyKnowledge(): KnowledgeChunk[] {
       id: "quote",
       title: "How to get a quote",
       href: "/enquire",
-      text: `Request a quote at /enquire or WhatsApp ${site.phoneDisplay}. Include crop, acres, and whether you need solid or liquid packs. This site captures enquiries for farmers, dealers, estates, and institutions. We do not run online checkout or published price lists on the website — prices are quoted by the plant.`,
+      text: `Request a quote at /enquire or WhatsApp ${site.phoneDisplay}. Include crop, acres, and whether you need solid or liquid packs. This site captures enquiries for farmers, dealers, estates, and institutions. We do not run online checkout or published price lists on the website - prices are quoted by the plant.`,
     },
   ];
 

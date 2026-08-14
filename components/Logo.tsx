@@ -14,7 +14,7 @@ export function Logo({ variant = "full", className = "", priority }: Props) {
         alt="Bloom Biotech"
         width={286}
         height={356}
-        className={`h-full w-auto ${className}`}
+        className={`w-auto max-w-full object-contain object-left ${className}`}
         priority={priority}
       />
     );
@@ -23,10 +23,10 @@ export function Logo({ variant = "full", className = "", priority }: Props) {
   return (
     <Image
       src="/brand/logo.png"
-      alt="Bloom Biotech — Green biotechnology"
+      alt="Bloom Biotech, green biotechnology"
       width={907}
       height={415}
-      className={`h-full w-auto ${className}`}
+      className={`w-auto max-w-full object-contain object-left ${className}`}
       priority={priority}
     />
   );

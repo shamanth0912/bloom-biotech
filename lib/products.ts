@@ -21,8 +21,8 @@ export const products: Product[] = [
     pack: "Solid (carrier) and liquid formulations",
     body: [
       "Bloom Biotech is listed by ICAR-IIHR as a licensed producer of Arka Microbial Consortium (solid and liquid). Farmers do not need separate N-fixing, phosphate-solubilizing, and growth-promoting inoculants.",
-      "IIHR reports 5–15% yield gains in vegetables, 25–30% lower N and P fertilizer need, stronger seedlings, and earlier transplant readiness.",
-      "Typical use: 10–20 g per 100–200 g seed; 1 kg AMC per tonne of coco-peat; 20 g/L as a root-zone drench; 5 kg mixed with 500 kg FYM per acre near the root zone.",
+      "IIHR reports 5-15% yield gains in vegetables, 25-30% lower N and P fertilizer need, stronger seedlings, and earlier transplant readiness.",
+      "Typical use: 10-20 g per 100-200 g seed; 1 kg AMC per tonne of coco-peat; 20 g/L as a root-zone drench; 5 kg mixed with 500 kg FYM per acre near the root zone.",
     ],
   },
   {
@@ -49,7 +49,7 @@ export const products: Product[] = [
     use: "Basal / root-zone application",
     pack: "Liquid bottle",
     body: [
-      "Named for ‘soil prosperity’ — used where soils have been mined of biology after years of soluble fertiliser.",
+      "Named for ‘soil prosperity’ - used where soils have been mined of biology after years of soluble fertiliser.",
       "Works best with compost, mulch, and reduced shock doses of urea.",
     ],
   },
@@ -64,7 +64,7 @@ export const products: Product[] = [
     pack: "Liquid bottle",
     body: [
       "Trichoderma colonises the root zone and competes with damping-off and wilt fungi common in wet Western Ghats nurseries.",
-      "Use as part of an integrated programme — not a substitute for drainage and clean planting material.",
+      "Use as part of an integrated programme - not a substitute for drainage and clean planting material.",
     ],
   },
   {
@@ -153,7 +153,7 @@ export const products: Product[] = [
     use: "Heap or pit composting",
     pack: "As supplied",
     body: [
-      "Turns coffee pulp, weeds, and crop residue into usable manure faster — the cheapest fertility most estates already have.",
+      "Turns coffee pulp, weeds, and crop residue into usable manure faster - the cheapest fertility most estates already have.",
     ],
   },
 ];

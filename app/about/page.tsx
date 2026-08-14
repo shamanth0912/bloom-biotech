@@ -4,7 +4,7 @@ import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Company",
-  description: "Bloom Biotech overview — Chikkamagaluru green biotechnology plant.",
+  description: "Bloom Biotech overview - Chikkamagaluru green biotechnology plant.",
 };
 
 export default function AboutPage() {
@@ -19,14 +19,14 @@ export default function AboutPage() {
         <p>
           Bloom Biotech is an agri-biotechnology firm in Chikkamagaluru,
           Karnataka. Public directories list the plant at Survey No. 259/1,
-          Hampapura Bypass Road, Beekanahalli / Joythinagar — on the main
+          Hampapura Bypass Road, Beekanahalli / Joythinagar - on the main
           approach, which is how Google reviewers find it.
         </p>
         <p>
           The work is green biotechnology: microbial consortia, Trichoderma,
           Pseudomonas, nematode management, compost decomposers, and soil
           conditioners. IndiaMART shows the commercial names farmers already
-          ask for — Bio Sanjiveeni, Bhu Samruddhi, Bluderma, Blumonas, Bio
+          ask for - Bio Sanjiveeni, Bhu Samruddhi, Bluderma, Blumonas, Bio
           Astra, Bio Charge, Root Care, Bio Vanish, Bio Hit, Bio Erase.
         </p>
         <p>
@@ -34,7 +34,7 @@ export default function AboutPage() {
           Suhas Mohan for Arka Microbial Consortium (solid and liquid). That
           licence is the spine of the company story we tell institutions and
           estates. Google’s knowledge panel also notes collaboration around
-          Arka Microbial Consortium and Arka Actino Consortium — we treat
+          Arka Microbial Consortium and Arka Actino Consortium - we treat
           that as a claim to verify on letterhead before you print a tender.
         </p>
         <p>
@@ -44,7 +44,7 @@ export default function AboutPage() {
           </a>{" "}
           is the living scrapbook: tissue-culture / nursery trays, earthmoving
           around organic matter, field sampling with buckets, and bags of
-          water-soluble NPK (Van Iperen 19-19-19). That last part matters —
+          water-soluble NPK (Van Iperen 19-19-19). That last part matters - 
           many customers run biology next to soluble nutrition, not instead of
           it.
         </p>

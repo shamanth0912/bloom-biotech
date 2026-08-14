@@ -23,10 +23,13 @@ export function Header() {
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-2.5">
         <Link
           href="/"
-          className="flex h-12 items-center sm:h-[3.25rem]"
+          className="flex h-12 shrink-0 items-center overflow-hidden sm:h-[3.25rem]"
           onClick={() => setOpen(false)}
         >
-          <Logo priority className="max-h-12 sm:max-h-[3.25rem]" />
+          <Logo
+            priority
+            className="h-10 max-h-10 max-w-[11rem] sm:h-12 sm:max-h-12 sm:max-w-[16rem]"
+          />
         </Link>
         <nav className="hidden items-center gap-8 text-[13px] text-forest md:flex">
           {links.map((l) => (

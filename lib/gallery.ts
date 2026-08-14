@@ -2,7 +2,7 @@ export const gallery = [
   {
     src: "https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?auto=format&fit=crop&w=1400&q=80",
     alt: "Seedlings in a nursery tray",
-    caption: "Nursery trays — where consortium and Trichoderma earn their keep.",
+    caption: "Nursery trays - where consortium and Trichoderma earn their keep.",
     credit: "Unsplash",
   },
   {
@@ -14,7 +14,7 @@ export const gallery = [
   {
     src: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1400&q=80",
     alt: "Coffee cherries on a plant",
-    caption: "Coffee country around Chikkamagaluru — our home market.",
+    caption: "Coffee country around Chikkamagaluru - our home market.",
     credit: "Unsplash",
   },
   {

@@ -15,7 +15,7 @@ export const welcomeAnswer: ChatAnswer = {
   title: "Ask Bloom",
   bullets: [
     "Short answers on products, the plant, and quotes.",
-    "No price list online — the plant quotes after crop + acres.",
+    "No price list online - the plant quotes after crop + acres.",
     "Tap a topic below, or type a crop name.",
   ],
   links: [
@@ -108,9 +108,9 @@ export function answerQuestion(question: string): ChatAnswer {
 
   if (/dose|how to use|application|fym|drench|seed treatment|per acre/.test(q) && /amc|arka|consortium/.test(q)) {
     return {
-      title: "AMC — how to use",
+      title: "AMC - how to use",
       bullets: [
-        "Seed: 10–20 g per 100–200 g seed.",
+        "Seed: 10-20 g per 100-200 g seed.",
         "Coco-peat: 1 kg AMC per tonne.",
         "Drench: 20 g per litre at the root zone.",
         "Field: 5 kg + 500 kg FYM per acre.",
@@ -127,9 +127,9 @@ export function answerQuestion(question: string): ChatAnswer {
     return {
       title: "Arka Microbial Consortium",
       bullets: [
-        "ICAR-IIHR licensed — solid and liquid.",
+        "ICAR-IIHR licensed - solid and liquid.",
         "One pack: N-fix + P/Zn solubilizers + growth microbes.",
-        "IIHR: 5–15% veg yield; 25–30% less N & P.",
+        "IIHR: 5-15% veg yield; 25-30% less N & P.",
         "Use: seed, coco-peat, drench, or FYM mix.",
       ],
       cta: "Bottle label wins if the dose differs.",
@@ -145,7 +145,7 @@ export function answerQuestion(question: string): ChatAnswer {
   if (/list|catalogue|catalog|products|what do you sell|range|other products/.test(q)) {
     return {
       title: "Product range",
-      bullets: products.slice(0, 6).map((p) => `${p.name} — ${p.category.toLowerCase()}`),
+      bullets: products.slice(0, 6).map((p) => `${p.name} - ${p.category.toLowerCase()}`),
       cta: `${products.length} packs on the site. Open a card for crops and use.`,
       links: [nav.products, nav.quote],
       followUps: ["What is AMC?", "Trichoderma", "Nematode product"],
@@ -193,7 +193,7 @@ export function answerQuestion(question: string): ChatAnswer {
   if (picked.length > 1) {
     return {
       title: "Best matches",
-      bullets: picked.slice(0, 4).map((p) => `${p.name} — ${p.crops[0] ?? p.category}`),
+      bullets: picked.slice(0, 4).map((p) => `${p.name} - ${p.crops[0] ?? p.category}`),
       cta: "Open a pack, or send crop + acres for a quote.",
       links: [
         ...picked.slice(0, 3).map(nav.product),

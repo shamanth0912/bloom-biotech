@@ -13,7 +13,7 @@ export default function JournalPage() {
       <p className="text-xs uppercase tracking-[0.2em] text-soil">Journal</p>
       <h1 className="mt-2 font-serif text-4xl text-forest">Articles</h1>
       <p className="mt-3 text-muted">
-        Field notes written as if Bloom were briefing a new agronomist — not
+        Field notes written as if Bloom were briefing a new agronomist - not
         generic SEO filler.
       </p>
       <ul className="mt-10 space-y-6">

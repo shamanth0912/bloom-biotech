@@ -25,7 +25,7 @@ const plexMono = IBM_Plex_Mono({
 
 export const metadata = {
   title: {
-    default: `${site.name} — ${site.tagline}`,
+    default: `${site.name} - ${site.tagline}`,
     template: `%s · ${site.name}`,
   },
   description: site.description,
@@ -42,6 +42,12 @@ export const metadata = {
   },
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover" as const,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -54,7 +60,7 @@ export default function RootLayout({
     >
       <body className="flex min-h-full flex-col bg-paper text-ink antialiased">
         <Header />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 pb-24 sm:pb-8">{children}</main>
         <Footer />
         <ChatWidget />
       </body>

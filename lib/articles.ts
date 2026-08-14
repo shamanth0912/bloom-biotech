@@ -13,12 +13,12 @@ export const articles: Article[] = [
     title: "What Arka Microbial Consortium actually does in the field",
     date: "2026-03-12",
     excerpt:
-      "One licensed IIHR formulation instead of three separate inoculants — and why that matters on coffee and vegetable ground.",
+      "One licensed IIHR formulation instead of three separate inoculants - and why that matters on coffee and vegetable ground.",
     tags: ["AMC", "IIHR", "How-to"],
     body: [
       "Most biofertilizer programmes fail because they are fiddly. A nitrogen fixer in one packet, a phosphate solubilizer in another, a zinc solubilizer if you remember. Arka Microbial Consortium (AMC) was designed at ICAR-IIHR so those jobs sit in a single carrier or liquid.",
       "Bloom Biotech appears on IIHR’s active licence list for AMC solid and liquid. That is the difference between a generic ‘bacteria bottle’ and a technology with a public protocol.",
-      "IIHR’s published advantages are practical: 5–15% yield movement in vegetables, 25–30% less N and P fertiliser, stronger seedlings, and transplant a few days earlier. None of that replaces compost, drainage, or shade management in coffee.",
+      "IIHR’s published advantages are practical: 5-15% yield movement in vegetables, 25-30% less N and P fertiliser, stronger seedlings, and transplant a few days earlier. None of that replaces compost, drainage, or shade management in coffee.",
       "Start simple. Treat seed. Enrich coco-peat in the nursery. Drench after transplant. Mix with FYM for the main field. If a dealer cannot tell you those four routes, they are selling a slogan.",
     ],
   },
@@ -44,7 +44,7 @@ export const articles: Article[] = [
     tags: ["Nursery", "Trichoderma", "IPM"],
     body: [
       "If trays sit in a puddle, no fungus you buy will outrun Pythium. Trichoderma earns its keep when media is aerated, water is timed, and seedlings are not overcrowded.",
-      "Use a drench or a mix into coco-peat that has already been enriched — AMC plus Trichoderma is a common nursery pairing. Keep labels. Keep batch numbers. That is how dealers and KVKs take you seriously.",
+      "Use a drench or a mix into coco-peat that has already been enriched - AMC plus Trichoderma is a common nursery pairing. Keep labels. Keep batch numbers. That is how dealers and KVKs take you seriously.",
     ],
   },
   {
@@ -56,7 +56,7 @@ export const articles: Article[] = [
     tags: ["Dealers", "Sales"],
     body: [
       "A good quote names the crop, acres, formulation (solid vs liquid), and whether the farmer already uses FYM. A bad quote is a price per bottle with a 40% yield claim.",
-      "Bloom Biotech can support dealer boards with pack photos, IIHR licence context, and a simple enquiry form from this site. If you stock Van Iperen water-solubles alongside our biology, say so — farmers already mix programmes.",
+      "Bloom Biotech can support dealer boards with pack photos, IIHR licence context, and a simple enquiry form from this site. If you stock Van Iperen water-solubles alongside our biology, say so - farmers already mix programmes.",
       "We would rather lose a rushed order than a reputation in one taluk.",
     ],
   },

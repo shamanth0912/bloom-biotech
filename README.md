@@ -1,6 +1,6 @@
 # Bloom Biotech
 
-Public website for Bloom Biotech, Chikkamagaluru — microbial biofertilizers, ICAR-IIHR Arka Microbial Consortium, and a quote form for farmers, dealers, estates, and institutions.
+Public website for Bloom Biotech, Chikkamagaluru - microbial biofertilizers, ICAR-IIHR Arka Microbial Consortium, and a quote form for farmers, dealers, estates, and institutions.
 
 ## Run
 

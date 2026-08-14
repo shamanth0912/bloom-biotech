@@ -7,10 +7,8 @@ export function Footer() {
     <footer className="bg-forest text-paper">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 md:grid-cols-4">
         <div className="space-y-4 md:col-span-2">
-          <div className="inline-flex bg-white px-3 py-2">
-            <div className="h-14">
-              <Logo />
-            </div>
+          <div className="inline-flex h-14 max-w-[16rem] items-center overflow-hidden bg-white px-3 py-2">
+            <Logo className="h-10 max-h-10" />
           </div>
           <p className="max-w-md text-sm leading-relaxed text-paper/75">
             Microbial inputs from Chikkamagaluru. Licensed ICAR-IIHR Arka

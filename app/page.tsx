@@ -16,12 +16,12 @@ export default function HomePage() {
             <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-muted">
               Chikkamagaluru · Karnataka · Plant
             </p>
-            <h1 className="mt-5 max-w-xl font-serif text-[2.6rem] leading-[1.08] text-forest sm:text-5xl md:text-[3.4rem]">
+            <h1 className="mt-5 max-w-xl font-serif text-[2rem] leading-[1.1] text-forest sm:text-5xl md:text-[3.4rem]">
               Microbes for soil that still has to work next season.
             </h1>
             <p className="mt-6 max-w-md text-[1.05rem] leading-relaxed text-muted">
-              Licensed ICAR-IIHR Arka Microbial Consortium from the coffee belt
-              — not a generic bacteria bottle, not a city trading desk.
+              Licensed ICAR-IIHR Arka Microbial Consortium from the coffee belt,
+              not a generic bacteria bottle, not a city trading desk.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button href="/enquire">Request a quote</Button>
@@ -30,9 +30,12 @@ export default function HomePage() {
               </Button>
             </div>
           </div>
-          <div className="reveal relative flex flex-col justify-end" style={{ animationDelay: "120ms" }}>
-            <div className="mb-8 h-16 self-start md:self-end">
-              <Logo priority />
+          <div
+            className="reveal flex flex-col gap-8"
+            style={{ animationDelay: "120ms" }}
+          >
+            <div className="relative h-16 w-full max-w-xs overflow-hidden">
+              <Logo priority className="h-16 max-h-16" />
             </div>
             <blockquote className="border-l-2 border-leaf pl-4 text-sm leading-relaxed text-muted">
               “I have used the products for 2 years with excellent results.”
