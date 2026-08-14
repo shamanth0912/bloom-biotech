@@ -294,7 +294,7 @@ export function ChatWidget() {
             <button
               type="submit"
               disabled={busy}
-              className="rounded-full bg-leaf px-4 py-2 text-sm text-white disabled:opacity-50"
+              className="btn btn-primary px-4"
             >
               Send
             </button>

@@ -4,23 +4,24 @@ import { Logo } from "./Logo";
 
 export function Footer() {
   return (
-    <footer className="border-t border-forest/10 bg-forest text-cream">
+    <footer className="bg-forest text-paper">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 md:grid-cols-4">
-        <div className="md:col-span-2 space-y-4">
-          <div className="inline-flex rounded-xl bg-white px-3 py-2">
+        <div className="space-y-4 md:col-span-2">
+          <div className="inline-flex bg-white px-3 py-2">
             <div className="h-14">
               <Logo />
             </div>
           </div>
-          <p className="max-w-md text-sm leading-relaxed text-lime/90">
+          <p className="max-w-md text-sm leading-relaxed text-paper/75">
             Microbial inputs from Chikkamagaluru. Licensed ICAR-IIHR Arka
-            Microbial Consortium. Built for farmers, dealers, estates, and
-            research partners.
+            Microbial Consortium.
           </p>
         </div>
         <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-lime">Visit</p>
-          <address className="mt-3 not-italic text-sm leading-relaxed text-cream/85">
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-lime">
+            Visit
+          </p>
+          <address className="mt-3 not-italic text-sm leading-relaxed text-paper/80">
             {site.addressLines.map((line) => (
               <span key={line} className="block">
                 {line}
@@ -30,7 +31,9 @@ export function Footer() {
           </address>
         </div>
         <div className="space-y-2 text-sm">
-          <p className="text-xs uppercase tracking-[0.2em] text-lime">Connect</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-lime">
+            Connect
+          </p>
           <a className="block hover:underline" href={`tel:+91${site.phone}`}>
             {site.phoneDisplay}
           </a>
@@ -45,10 +48,8 @@ export function Footer() {
           </Link>
         </div>
       </div>
-      <div className="border-t border-cream/10 px-4 py-4 text-center text-xs text-cream/60">
-        © {new Date().getFullYear()} Bloom Biotech, Chikkamagaluru. Content
-        seeded from public listings and IIHR licence data — confirm packs and
-        claims with the plant before print.
+      <div className="border-t border-white/10 px-4 py-4 text-center font-mono text-[10px] tracking-wide text-paper/50">
+        © {new Date().getFullYear()} Bloom Biotech, Chikkamagaluru
       </div>
     </footer>
   );

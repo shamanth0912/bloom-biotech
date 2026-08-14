@@ -24,25 +24,25 @@ export default async function ProductPage({ params }: Props) {
   return (
     <div className="mx-auto grid max-w-6xl gap-12 px-4 py-16 lg:grid-cols-[1.1fr_0.9fr]">
       <article>
-        <Link href="/products" className="text-sm text-leaf">
+        <Link href="/products" className="nav-link text-sm">
           ← Catalogue
         </Link>
-        <p className="mt-6 text-xs uppercase tracking-[0.2em] text-soil">
+        <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
           {product.category}
         </p>
         <h1 className="mt-2 font-serif text-4xl text-forest">{product.name}</h1>
         <p className="mt-4 text-lg text-muted">{product.short}</p>
-        <dl className="mt-8 grid gap-4 sm:grid-cols-2">
-          <div className="rounded-xl bg-white/60 p-4">
-            <dt className="text-xs uppercase tracking-wider text-soil">Crops</dt>
+        <dl className="mt-8 grid gap-px bg-forest/10 sm:grid-cols-2">
+          <div className="bg-paper p-4">
+            <dt className="font-mono text-[10px] uppercase tracking-wider text-muted">Crops</dt>
             <dd className="mt-1">{product.crops.join(" · ")}</dd>
           </div>
-          <div className="rounded-xl bg-white/60 p-4">
-            <dt className="text-xs uppercase tracking-wider text-soil">Use</dt>
+          <div className="bg-paper p-4">
+            <dt className="font-mono text-[10px] uppercase tracking-wider text-muted">Use</dt>
             <dd className="mt-1">{product.use}</dd>
           </div>
-          <div className="rounded-xl bg-white/60 p-4 sm:col-span-2">
-            <dt className="text-xs uppercase tracking-wider text-soil">Pack</dt>
+          <div className="bg-paper p-4 sm:col-span-2">
+            <dt className="font-mono text-[10px] uppercase tracking-wider text-muted">Pack</dt>
             <dd className="mt-1">{product.pack}</dd>
           </div>
         </dl>
@@ -52,7 +52,7 @@ export default async function ProductPage({ params }: Props) {
           ))}
         </div>
       </article>
-      <aside className="h-fit rounded-2xl border border-forest/10 bg-white/70 p-6">
+      <aside className="h-fit border border-forest/10 bg-white/50 p-6">
         <h2 className="font-serif text-2xl text-forest">Ask for this pack</h2>
         <p className="mt-2 mb-6 text-sm text-muted">
           Dealers and estates: include acres and whether you need solid or

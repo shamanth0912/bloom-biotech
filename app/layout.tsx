@@ -1,18 +1,26 @@
-import { Fraunces, Outfit } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans, Newsreader } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ChatWidget } from "@/components/ChatWidget";
 import { site } from "@/lib/site";
 
-const serif = Fraunces({
-  variable: "--font-fraunces",
+const news = Newsreader({
+  variable: "--font-news",
   subsets: ["latin"],
+  styles: ["normal", "italic"],
 });
 
-const sans = Outfit({
-  variable: "--font-outfit",
+const plex = IBM_Plex_Sans({
+  variable: "--font-plex",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
+});
+
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
+  subsets: ["latin"],
+  weight: ["400", "500"],
 });
 
 export const metadata = {
@@ -40,8 +48,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${serif.variable} ${sans.variable} h-full`}>
-      <body className="min-h-full flex flex-col bg-cream text-ink antialiased">
+    <html
+      lang="en"
+      className={`${news.variable} ${plex.variable} ${plexMono.variable} h-full`}
+    >
+      <body className="flex min-h-full flex-col bg-paper text-ink antialiased">
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
