@@ -2,16 +2,31 @@ import Link from "next/link";
 import { products } from "@/lib/products";
 import { articles } from "@/lib/articles";
 import { ProductCard } from "@/components/ProductCard";
-import { Logo } from "@/components/Logo";
+import { Photo } from "@/components/Photo";
 import { Button } from "@/components/Button";
+import { AudienceBoard } from "@/components/AudienceBoard";
+import { CropGuide } from "@/components/CropGuide";
+import { AmcRoutes } from "@/components/AmcRoutes";
 import { StatsStrip } from "@/components/StatsStrip";
 import { site, whatsappUrl } from "@/lib/site";
+import { heroPhoto } from "@/lib/gallery";
+
+const ticker = [
+  "Arka Microbial Consortium",
+  "Coffee nursery packs",
+  "Trichoderma · Bluderma",
+  "Bio Sanjiveeni",
+  "Root Care",
+  "Estate programmes",
+  "Dealer quotes",
+  "ICAR-IIHR licensed",
+];
 
 export default function HomePage() {
   return (
     <>
       <section className="relative overflow-hidden">
-        <div className="mx-auto grid max-w-6xl gap-12 px-4 py-14 md:grid-cols-[1.15fr_0.85fr] md:py-20">
+        <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-10 md:grid-cols-[1.05fr_0.95fr] md:py-16">
           <div className="reveal">
             <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-muted">
               Chikkamagaluru · Karnataka · Plant
@@ -30,24 +45,33 @@ export default function HomePage() {
               </Button>
             </div>
           </div>
-          <div
-            className="reveal flex flex-col gap-8"
-            style={{ animationDelay: "120ms" }}
-          >
-            <div className="relative h-16 w-full max-w-xs overflow-hidden">
-              <Logo priority className="h-16 max-h-16" />
-            </div>
-            <blockquote className="border-l-2 border-leaf pl-4 text-sm leading-relaxed text-muted">
-              “I have used the products for 2 years with excellent results.”
-              <span className="mt-2 block font-mono text-[10px] uppercase tracking-wider">
-                Google review · plant on Hampapura Bypass
-              </span>
-            </blockquote>
+          <div className="reveal" style={{ animationDelay: "120ms" }}>
+            <Photo
+              src={heroPhoto.src}
+              alt={heroPhoto.alt}
+              caption={`${heroPhoto.kicker} — ${heroPhoto.caption}`}
+              priority
+              sizes="(min-width: 768px) 42vw, 100vw"
+              ratio="aspect-[4/5] sm:aspect-[5/6] md:aspect-[4/5]"
+            />
           </div>
         </div>
       </section>
 
+      <div className="ticker" aria-hidden="true">
+        <div className="ticker-track py-3 font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
+          {[...ticker, ...ticker].map((item, i) => (
+            <span key={`${item}-${i}`} className="flex items-center gap-2.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-leaf" />
+              {item}
+            </span>
+          ))}
+        </div>
+      </div>
+
       <StatsStrip />
+
+      <CropGuide />
 
       <section className="mx-auto max-w-6xl px-4 py-16">
         <div className="flex items-end justify-between gap-4">
@@ -72,34 +96,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="bg-forest text-paper">
-        <div className="mx-auto grid max-w-6xl gap-12 px-4 py-16 md:grid-cols-2">
-          <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-lime">
-              03 / Who it is for
-            </p>
-            <h2 className="mt-3 font-serif text-3xl leading-tight md:text-4xl">
-              Four desks. One plant.
-            </h2>
-          </div>
-          <ol className="divide-y divide-white/10 text-sm">
-            {[
-              ["Farmers", "Seed, drench, FYM mix. Doses, not 40% yield claims."],
-              ["Dealers", "Sanjiveeni, Bhu Samruddhi, Bluderma, Root Care."],
-              ["Estates", "Coffee and horticulture programmes by block."],
-              ["Institutions", "Licence-backed AMC for KVKs and research."],
-            ].map(([k, v], i) => (
-              <li key={k} className="flex gap-4 py-4">
-                <span className="font-mono text-[11px] text-lime">0{i + 1}</span>
-                <div>
-                  <p className="font-medium">{k}</p>
-                  <p className="mt-1 text-paper/70">{v}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
+      <AmcRoutes />
+
+      <AudienceBoard />
 
       <section className="mx-auto max-w-6xl px-4 py-16">
         <div className="flex items-end justify-between">

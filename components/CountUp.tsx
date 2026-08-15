@@ -13,7 +13,6 @@ export function CountUp({
   suffix?: string;
   prefix?: string;
 }) {
-  const [n, setN] = useState(0);
   const [bump, setBump] = useState(false);
   const seen = useRef(false);
   const el = useRef<HTMLSpanElement>(null);
@@ -25,21 +24,9 @@ export function CountUp({
       ([entry]) => {
         if (!entry.isIntersecting || seen.current) return;
         seen.current = true;
-        const start = performance.now();
-        const dur = 900;
-        const tick = (t: number) => {
-          const p = Math.min(1, (t - start) / dur);
-          const eased = 1 - Math.pow(1 - p, 3);
-          setN(value * eased);
-          if (p < 1) requestAnimationFrame(tick);
-          else {
-            setN(value);
-            setBump(true);
-          }
-        };
-        requestAnimationFrame(tick);
+        setBump(true);
       },
-      { threshold: 0.4 },
+      { threshold: 0.2 },
     );
     io.observe(node);
     return () => io.disconnect();
@@ -51,7 +38,7 @@ export function CountUp({
       className={`inline-block origin-bottom ${bump ? "stat-bump" : ""}`}
     >
       {prefix}
-      {n.toFixed(decimals)}
+      {value.toFixed(decimals)}
       {suffix}
     </span>
   );

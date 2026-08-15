@@ -5,9 +5,10 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Logo } from "./Logo";
 import { Button } from "./Button";
-import { site, whatsappUrl } from "@/lib/site";
+import { site, telHref } from "@/lib/site";
 
 const links = [
+  { href: "/", label: "Home" },
   { href: "/about", label: "Company" },
   { href: "/products", label: "Catalogue" },
   { href: "/gallery", label: "Photos" },
@@ -36,27 +37,22 @@ export function Header() {
             <Link
               key={l.href}
               href={l.href}
-              data-active={path.startsWith(l.href)}
+              data-active={l.href === "/" ? path === "/" : path.startsWith(l.href)}
               className="nav-link"
             >
               {l.label}
             </Link>
           ))}
         </nav>
-        <div className="hidden items-center gap-4 md:flex">
-          <a
-            href={whatsappUrl()}
-            className="font-mono text-[11px] tracking-wide text-muted hover:text-forest"
-            target="_blank"
-            rel="noreferrer"
-          >
-            {site.phoneDisplay}
-          </a>
+        <div className="hidden items-center gap-3 md:flex">
+          <Button href={telHref()} variant="ghost">
+            Call {site.phoneDisplay}
+          </Button>
           <Button href="/enquire">Request a quote</Button>
         </div>
         <button
           type="button"
-          className="grid h-10 w-10 place-items-center border border-forest/15 md:hidden"
+          className="grid h-11 w-11 place-items-center border border-forest/15 md:hidden"
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           aria-label={open ? "Close menu" : "Open menu"}
@@ -80,32 +76,44 @@ export function Header() {
           />
         </button>
       </div>
-      <div
-        className={`overflow-hidden border-t border-forest/10 md:hidden ${open ? "max-h-96" : "max-h-0"}`}
-        style={{
-          transition: "max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1)",
-        }}
+      <nav
+        className={`mobile-nav md:hidden ${open ? "is-open" : ""}`}
+        aria-hidden={!open}
       >
-        <div className="flex flex-col gap-1 px-4 py-4">
+        <div className="flex flex-col gap-2 px-4 py-4">
           {links.map((l, i) => (
             <Link
               key={l.href}
               href={l.href}
               onClick={() => setOpen(false)}
-              className="py-2 text-lg text-forest"
-              style={{ animationDelay: `${i * 40}ms` }}
+              data-active={l.href === "/" ? path === "/" : path.startsWith(l.href)}
+              className="nav-card"
+              style={{ ["--i" as string]: i }}
             >
-              <span className="font-mono text-[10px] text-muted">
-                0{i + 1}
-              </span>{" "}
-              {l.label}
+              <span>
+                <span className="font-mono text-[10px] text-muted">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="ml-2 text-lg">{l.label}</span>
+              </span>
+              <span className="text-leaf">→</span>
             </Link>
           ))}
-          <Button href="/enquire" className="mt-3 w-full" onClick={() => setOpen(false)}>
-            Request a quote
-          </Button>
+          <div className="nav-actions mt-1 flex flex-col gap-2">
+            <Button
+              href={telHref()}
+              variant="ghost"
+              className="w-full"
+              onClick={() => setOpen(false)}
+            >
+              Call {site.phoneDisplay}
+            </Button>
+            <Button href="/enquire" className="w-full" onClick={() => setOpen(false)}>
+              Request a quote
+            </Button>
+          </div>
         </div>
-      </div>
+      </nav>
     </header>
   );
 }

@@ -57,8 +57,13 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${news.variable} ${plex.variable} ${plexMono.variable} h-full`}
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
     >
-      <body className="flex min-h-full flex-col bg-paper text-ink antialiased">
+      <body
+        className="flex min-h-full flex-col bg-paper text-ink antialiased"
+        suppressHydrationWarning
+      >
         <Header />
         <main className="flex-1 pb-24 sm:pb-8">{children}</main>
         <Footer />

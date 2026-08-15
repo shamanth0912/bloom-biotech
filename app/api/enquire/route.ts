@@ -24,14 +24,18 @@ export async function POST(request: Request) {
     message,
   };
 
-  await mkdir(path.dirname(file), { recursive: true });
-  let existing: unknown[] = [];
   try {
-    existing = JSON.parse(await readFile(file, "utf8")) as unknown[];
+    await mkdir(path.dirname(file), { recursive: true });
+    let existing: unknown[] = [];
+    try {
+      existing = JSON.parse(await readFile(file, "utf8")) as unknown[];
+    } catch {
+      existing = [];
+    }
+    existing.push(entry);
+    await writeFile(file, JSON.stringify(existing, null, 2));
   } catch {
-    existing = [];
+    // Workers / serverless runtimes have no writable local disk.
   }
-  existing.push(entry);
-  await writeFile(file, JSON.stringify(existing, null, 2));
   return NextResponse.json({ ok: true, id: entry.id });
 }

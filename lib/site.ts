@@ -21,6 +21,10 @@ export const site = {
   googleReviews: 18,
 } as const;
 
+export function telHref() {
+  return `tel:+91${site.phone}`;
+}
+
 export function whatsappUrl(text?: string) {
   const message =
     text ??

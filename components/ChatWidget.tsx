@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { welcomeAnswer, type ChatAnswer } from "@/lib/assistant";
+import { AiMark } from "./AiMark";
 
 type RoleMsg =
   | { id: string; role: "user"; content: string }
@@ -16,10 +16,11 @@ type Thread = {
   messages: RoleMsg[];
 };
 
-const STORAGE_KEY = "bloom-chat-threads-v1";
-const ACTIVE_KEY = "bloom-chat-active-v1";
+const STORAGE_KEY = "bloom-chat-threads-v2";
+const ACTIVE_KEY = "bloom-chat-active-v2";
 
 const nav = [
+  { href: "/", label: "Home" },
   { href: "/products", label: "Products" },
   { href: "/about", label: "Company" },
   { href: "/gallery", label: "Photos" },
@@ -28,6 +29,47 @@ const nav = [
 
 function uid() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+}
+
+function asAnswer(raw: unknown): ChatAnswer {
+  const a = (raw ?? {}) as Partial<ChatAnswer>;
+  return {
+    title: String(a.title || "Ask Bloom AI"),
+    summary: String(a.summary || ""),
+    bullets: Array.isArray(a.bullets) ? a.bullets.map(String) : [],
+    cta: a.cta ? String(a.cta) : undefined,
+    links: Array.isArray(a.links)
+      ? a.links.filter((l) => l && typeof l.href === "string" && typeof l.label === "string")
+      : [],
+    followUps: Array.isArray(a.followUps) ? a.followUps.map(String) : [],
+  };
+}
+
+function readThreads(raw: unknown): Thread[] {
+  if (!Array.isArray(raw)) return [];
+  return raw
+    .map((t) => {
+      const thread = t as Partial<Thread>;
+      if (!thread?.id || !Array.isArray(thread.messages)) return null;
+      return {
+        id: String(thread.id),
+        title: String(thread.title || "Chat"),
+        updatedAt: Number(thread.updatedAt) || 0,
+        messages: thread.messages
+          .map((m) => {
+            const msg = m as RoleMsg;
+            if (msg?.role === "user" && "content" in msg) {
+              return { id: String(msg.id || uid()), role: "user" as const, content: String(msg.content) };
+            }
+            if (msg?.role === "assistant") {
+              return { id: String(msg.id || uid()), role: "assistant" as const, answer: asAnswer(msg.answer) };
+            }
+            return null;
+          })
+          .filter((m): m is RoleMsg => m !== null),
+      };
+    })
+    .filter((t): t is Thread => t !== null && t.messages.length > 0);
 }
 
 function freshThread(): Thread {
@@ -54,13 +96,15 @@ export function ChatWidget() {
   const [ready, setReady] = useState(false);
   const [threads, setThreads] = useState<Thread[]>([BOOT_THREAD]);
   const [activeId, setActiveId] = useState("boot");
-  const endRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const activeIdRef = useRef(activeId);
+  activeIdRef.current = activeId;
 
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      const saved = raw ? (JSON.parse(raw) as Thread[]) : [];
+      const saved = readThreads(raw ? JSON.parse(raw) : []);
       const lastId = localStorage.getItem(ACTIVE_KEY);
       if (saved.length) {
         setThreads(saved);
@@ -85,9 +129,25 @@ export function ChatWidget() {
   }, [threads, activeId, ready]);
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    if (!open) return;
+    const html = document.documentElement;
+    const y = window.scrollY;
+    html.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${y}px`;
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    document.body.style.width = "100%";
     return () => {
+      html.style.overflow = "";
       document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      document.body.style.width = "";
+      window.scrollTo(0, y);
     };
   }, [open]);
 
@@ -97,14 +157,16 @@ export function ChatWidget() {
   );
 
   useEffect(() => {
-    if (open) {
-      endRef.current?.scrollIntoView({ behavior: "smooth" });
-      inputRef.current?.focus();
+    if (!open) return;
+    const pane = listRef.current;
+    if (pane) pane.scrollTop = pane.scrollHeight;
+    if (window.matchMedia("(min-width: 640px)").matches) {
+      inputRef.current?.focus({ preventScroll: true });
     }
   }, [active.messages, open, busy]);
 
-  function patchActive(updater: (t: Thread) => Thread) {
-    setThreads((all) => all.map((t) => (t.id === activeId ? updater(t) : t)));
+  function patchThread(id: string, updater: (t: Thread) => Thread) {
+    setThreads((all) => all.map((t) => (t.id === id ? updater(t) : t)));
   }
 
   function newChat() {
@@ -122,10 +184,12 @@ export function ChatWidget() {
 
   async function send(text: string) {
     const q = text.trim();
-    if (!q || busy) return;
+    if (!q || busy || !ready) return;
+    const threadId = activeIdRef.current;
     const userMsg: RoleMsg = { id: uid(), role: "user", content: q };
-    const title = active.title === "New chat" ? q.slice(0, 36) : active.title;
-    patchActive((t) => ({
+    const current = threads.find((t) => t.id === threadId) ?? active;
+    const title = current.title === "New chat" ? q.slice(0, 36) : current.title;
+    patchThread(threadId, (t) => ({
       ...t,
       title,
       updatedAt: Date.now(),
@@ -134,46 +198,50 @@ export function ChatWidget() {
     setInput("");
     setBusy(true);
     try {
-      const history = [...active.messages, userMsg]
-        .filter((m) => m.role === "user")
+      const history = [...current.messages, userMsg]
+        .filter((m): m is Extract<RoleMsg, { role: "user" }> => m.role === "user")
         .slice(-6)
         .map((m) => ({ role: "user" as const, content: m.content }));
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messages: [...history, { role: "user", content: q }],
-        }),
+        signal: AbortSignal.timeout(15000),
+        body: JSON.stringify({ messages: history }),
       });
       const data = (await res.json()) as { answer?: ChatAnswer };
-      const answer = data.answer ?? {
-        title: "Try again",
-        bullets: ["Could not reach the assistant.", "Use WhatsApp or the quote form."],
-        links: [
-          { label: "Quote", href: "/enquire" },
-          { label: "WhatsApp", href: "https://wa.me/918884568019" },
-        ],
-        followUps: [],
-      };
-      patchActive((t) => ({
+      const answer = asAnswer(
+        data.answer ?? {
+          title: "Try again",
+          summary:
+            "The assistant did not return a briefing. Use WhatsApp or the quote form and include crop and acres.",
+          bullets: ["Could not reach the assistant.", "Use WhatsApp or the quote form."],
+          links: [
+            { label: "Quote", href: "/enquire" },
+            { label: "WhatsApp", href: "https://wa.me/918884568019" },
+          ],
+          followUps: [],
+        },
+      );
+      patchThread(threadId, (t) => ({
         ...t,
         updatedAt: Date.now(),
         messages: [...t.messages, { id: uid(), role: "assistant", answer }],
       }));
     } catch {
-      patchActive((t) => ({
+      patchThread(threadId, (t) => ({
         ...t,
         messages: [
           ...t.messages,
           {
             id: uid(),
             role: "assistant",
-            answer: {
+            answer: asAnswer({
               title: "Offline",
+              summary: "The chat could not reach the server. Call or WhatsApp the plant.",
               bullets: ["Network error.", "Call +91 88845 68019."],
               links: [{ label: "Quote form", href: "/enquire" }],
               followUps: [],
-            },
+            }),
           },
         ],
       }));
@@ -183,9 +251,9 @@ export function ChatWidget() {
   }
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-[90] flex flex-col items-end justify-end p-3 sm:p-4">
+    <>
       {open ? (
-        <div className="pointer-events-auto mb-0 flex h-[100dvh] w-full max-w-none flex-col overflow-hidden border border-forest/15 bg-white shadow-2xl sm:mb-3 sm:h-[min(36rem,78vh)] sm:max-w-[26rem] sm:rounded-2xl max-sm:fixed max-sm:inset-0 max-sm:h-[100dvh] max-sm:rounded-none">
+        <div className="pointer-events-auto fixed inset-0 z-[90] flex h-[100dvh] w-full flex-col overflow-hidden border border-forest/15 bg-white shadow-2xl overscroll-none sm:inset-auto sm:right-4 sm:bottom-20 sm:h-[min(36rem,78vh)] sm:w-[26rem] sm:rounded-2xl">
           {historyOpen ? (
             <div className="absolute inset-0 z-10 flex flex-col bg-white">
               <div className="flex items-center justify-between border-b border-forest/10 px-3 py-3 pt-[max(0.75rem,env(safe-area-inset-top))]">
@@ -225,15 +293,9 @@ export function ChatWidget() {
           ) : null}
 
           <div className="flex items-center gap-2 border-b border-forest/10 px-2 py-2 pt-[max(0.5rem,env(safe-area-inset-top))]">
-            <Image
-              src="/brand/mark.png"
-              alt=""
-              width={28}
-              height={34}
-              className="h-8 w-auto"
-            />
+            <AiMark />
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-medium leading-tight">Ask Bloom</p>
+              <p className="text-sm font-medium leading-tight">Ask Bloom AI</p>
               <p className="truncate text-[11px] text-muted">{active.title}</p>
             </div>
             <IconBtn label="New chat" onClick={newChat}>
@@ -260,7 +322,10 @@ export function ChatWidget() {
             ))}
           </div>
 
-          <div className="min-h-0 flex-1 space-y-3 overflow-y-auto bg-cream/70 p-3">
+          <div
+            ref={listRef}
+            className="min-h-0 flex-1 space-y-3 overflow-y-auto overscroll-contain bg-cream/70 p-3"
+          >
             {active.messages.map((m) =>
               m.role === "user" ? (
                 <div
@@ -274,7 +339,6 @@ export function ChatWidget() {
               ),
             )}
             {busy ? <p className="text-xs text-muted">Summarising…</p> : null}
-            <div ref={endRef} />
           </div>
 
           <form
@@ -294,7 +358,7 @@ export function ChatWidget() {
             />
             <button
               type="submit"
-              disabled={busy}
+              disabled={busy || !ready}
               className="btn btn-primary min-h-11 shrink-0 px-4"
             >
               Send
@@ -305,21 +369,19 @@ export function ChatWidget() {
 
       <button
         type="button"
-        onClick={() => setOpen(true)}
-        className={`pointer-events-auto flex items-center gap-2 rounded-full bg-white py-2.5 pr-4 pl-2 text-sm font-medium shadow-lg ring-1 ring-forest/10 ${open ? "hidden sm:flex" : "flex"}`}
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setOpen(true);
+        }}
+        className={`fixed right-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-[91] flex items-center gap-2 rounded-full bg-white py-2.5 pr-4 pl-2 text-sm font-medium shadow-lg ring-1 ring-forest/10 ${open ? "hidden sm:flex" : "flex"}`}
         aria-expanded={open}
-        aria-label="Open Ask Bloom"
+        aria-label="Open Ask Bloom AI"
       >
-        <Image
-          src="/brand/mark.png"
-          alt=""
-          width={32}
-          height={40}
-          className="h-8 w-auto"
-        />
-        Ask Bloom
+        <AiMark />
+        Ask Bloom AI
       </button>
-    </div>
+    </>
   );
 }
 
@@ -355,8 +417,11 @@ function AnswerCard({
   return (
     <div className="mr-2 rounded-2xl bg-white p-3 text-sm shadow-sm sm:mr-4">
       <p className="font-medium text-forest">{answer.title}</p>
-      <ul className="mt-2 space-y-1 text-[13px] leading-snug text-ink">
-        {answer.bullets.map((b) => (
+      {answer.summary ? (
+        <p className="mt-2 text-[13px] leading-relaxed text-ink">{answer.summary}</p>
+      ) : null}
+      <ul className="mt-3 space-y-1.5 text-[13px] leading-snug text-ink">
+        {(answer.bullets ?? []).map((b) => (
           <li key={b} className="flex gap-2">
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-leaf" />
             <span>{b}</span>
@@ -364,7 +429,7 @@ function AnswerCard({
         ))}
       </ul>
       {answer.cta ? <p className="mt-2 text-xs text-muted">{answer.cta}</p> : null}
-      {answer.links.length ? (
+      {answer.links?.length ? (
         <div className="mt-2 flex flex-wrap gap-1.5">
           {answer.links.map((l) => (
             <Link
@@ -377,7 +442,7 @@ function AnswerCard({
           ))}
         </div>
       ) : null}
-      {answer.followUps.length ? (
+      {answer.followUps?.length ? (
         <div className="mt-2 flex flex-wrap gap-1.5">
           {answer.followUps.map((q) => (
             <button

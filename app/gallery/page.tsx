@@ -26,14 +26,14 @@ export default function GalleryPage() {
         {gallery.map((item) => (
           <figure
             key={item.src}
-            className="overflow-hidden rounded-2xl border border-forest/10 bg-white"
+            className="photo-frame overflow-hidden rounded-2xl border border-forest/10 bg-white"
           >
             <div className="relative aspect-[4/3]">
               <Image
                 src={item.src}
                 alt={item.alt}
                 fill
-                className="object-cover"
+                className="object-cover photo-zoom"
                 sizes="(min-width: 640px) 50vw, 100vw"
               />
             </div>

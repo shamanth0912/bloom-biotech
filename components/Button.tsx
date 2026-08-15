@@ -41,6 +41,20 @@ export function Button({
   const motion = { onMouseMove: onMove, onMouseLeave: onLeave };
 
   if (href) {
+    const external = /^(https?:|tel:|mailto:|sms:)/i.test(href);
+    if (external) {
+      return (
+        <a
+          href={href}
+          ref={ref as React.Ref<HTMLAnchorElement>}
+          className={cls}
+          onClick={onClick}
+          {...motion}
+        >
+          {children}
+        </a>
+      );
+    }
     return (
       <Link
         href={href}
