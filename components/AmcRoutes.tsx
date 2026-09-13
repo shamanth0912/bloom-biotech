@@ -13,7 +13,6 @@ const routes = [
     why: "Wet the entire root system. Do not mix with antibiotics, pesticides, or insecticides.",
     photo: "/photos/amc/amc-01-soil-drench.png",
     alt: "Mixing powder AMC into a water bucket, then drenching the root zone of a seedling",
-    fit: "cover" as const,
   },
   {
     id: "fym",
@@ -23,7 +22,6 @@ const routes = [
     why: "Apply to soil after 7-10 days of enrichment. Same route for Bio Astra (ACT).",
     photo: "/photos/amc/amc-02-fym-compost.png",
     alt: "Mixing powder AMC into a FYM heap, then applying enriched compost to the crop",
-    fit: "cover" as const,
   },
   {
     id: "drip",
@@ -33,7 +31,6 @@ const routes = [
     why: "Filter the solution before it enters the drip lines.",
     photo: "/photos/amc/amc-03-drip-filter.png",
     alt: "Filtering mixed AMC through cloth into a tank, then drip emitters at the root line",
-    fit: "cover" as const,
   },
   {
     id: "liquid",
@@ -43,7 +40,6 @@ const routes = [
     why: "Same three strains as the powder, in liquid. Do not mix with antibiotics, pesticides, or insecticides.",
     photo: "/photos/amc/amc-04-liquid-amc.png",
     alt: "Measuring liquid AMC into a sprayer, with foliar mist and a drip line",
-    fit: "cover" as const,
   },
 ] as const;
 
@@ -156,20 +152,14 @@ export function AmcRoutes() {
               onPointerUp={isTop ? onPointerUp : undefined}
               onPointerCancel={isTop ? onPointerUp : undefined}
             >
-              <div
-                className={`swipe-photo${card.fit === "contain" ? " is-pack" : ""}`}
-              >
+              <div className="swipe-photo">
                 <Image
                   src={card.photo}
                   alt={card.alt}
                   fill
                   draggable={false}
                   sizes="(min-width: 640px) 22rem, 85vw"
-                  className={
-                    card.fit === "contain"
-                      ? "object-contain p-6"
-                      : "object-cover"
-                  }
+                  className="object-cover"
                   priority={card.id === "drench"}
                 />
                 <div className="swipe-title">
