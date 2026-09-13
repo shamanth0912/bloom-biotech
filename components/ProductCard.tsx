@@ -1,5 +1,9 @@
+"use client";
+
 import Link from "next/link";
+import Image from "next/image";
 import type { Product } from "@/lib/products";
+import { TiltCard } from "./TiltCard";
 
 export function ProductCard({
   product,
@@ -9,33 +13,38 @@ export function ProductCard({
   index?: number;
 }) {
   return (
-    <Link
-      href={`/products/${product.slug}`}
-      className="ledger-card group flex flex-col p-5"
-      style={{ ["--i" as string]: index }}
-    >
-      <div className="flex items-baseline justify-between gap-3">
-        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
-          {String(index + 1).padStart(2, "0")} · {product.category}
-        </p>
-        <span
-          className="text-leaf transition-transform duration-500 group-hover:translate-x-1"
-          style={{
-            transitionTimingFunction: "cubic-bezier(0.34, 1.56, 0.64, 1)",
-          }}
-        >
-          →
-        </span>
-      </div>
-      <h3 className="mt-3 font-serif text-[1.65rem] leading-tight text-forest">
-        {product.name}
-      </h3>
-      <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">
-        {product.short}
-      </p>
-      <p className="mt-4 font-mono text-[11px] text-moss">
-        {product.crops.slice(0, 3).join(" · ")}
-      </p>
-    </Link>
+    <TiltCard>
+      <Link
+        href={`/products/${product.slug}`}
+        className="shop-card group"
+        style={{ ["--i" as string]: index }}
+      >
+        <div className="shop-card-media">
+          <Image
+            src={product.photo}
+            alt={`${product.name} pack`}
+            fill
+            sizes="(min-width: 1024px) 18rem, 45vw"
+            className="object-contain p-5 transition-transform duration-700 group-hover:scale-[1.04]"
+            style={{ transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)" }}
+          />
+        </div>
+        <div className="shop-card-body">
+          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted">
+            {product.category}
+            {product.imported ? " · imported" : ""}
+          </p>
+          <h3 className="mt-1.5 font-serif text-xl leading-tight text-forest">
+            {product.name}
+          </h3>
+          <p className="mt-3 flex items-center justify-between text-sm text-leaf">
+            View pack
+            <span className="transition-transform duration-500 group-hover:translate-x-1">
+              →
+            </span>
+          </p>
+        </div>
+      </Link>
+    </TiltCard>
   );
 }

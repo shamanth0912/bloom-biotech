@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { MorphIcon } from "morphicons/react";
+import { Menu, X } from "lucide";
 import { Logo } from "./Logo";
 import { Button } from "./Button";
 import { site, telHref } from "@/lib/site";
@@ -13,6 +15,7 @@ const links = [
   { href: "/products", label: "Catalogue" },
   { href: "/gallery", label: "Photos" },
   { href: "/journal", label: "Journal" },
+  { href: "/#faq", label: "FAQ" },
 ];
 
 export function Header() {
@@ -20,7 +23,7 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-forest/10 bg-paper/92 backdrop-blur-md">
+    <header className="site-header">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-2.5">
         <Link
           href="/"
@@ -32,7 +35,7 @@ export function Header() {
             className="h-10 max-h-10 max-w-[11rem] sm:h-12 sm:max-h-12 sm:max-w-[16rem]"
           />
         </Link>
-        <nav className="hidden items-center gap-8 text-[13px] text-forest md:flex">
+        <nav className="hidden items-center gap-5 text-[13px] text-forest lg:flex lg:gap-8">
           {links.map((l) => (
             <Link
               key={l.href}
@@ -44,7 +47,7 @@ export function Header() {
             </Link>
           ))}
         </nav>
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden items-center gap-3 lg:flex">
           <Button href={telHref()} variant="ghost">
             Call {site.phoneDisplay}
           </Button>
@@ -52,32 +55,22 @@ export function Header() {
         </div>
         <button
           type="button"
-          className="grid h-11 w-11 place-items-center border border-forest/15 md:hidden"
+          className="grid h-11 w-11 place-items-center border border-forest/15 text-forest lg:hidden"
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           aria-label={open ? "Close menu" : "Open menu"}
         >
-          <span
-            className="block h-px w-5 bg-forest transition-transform duration-500"
-            style={{
-              transform: open ? "translateY(3px) rotate(45deg)" : undefined,
-              transitionTimingFunction: "cubic-bezier(0.34, 1.56, 0.64, 1)",
-            }}
-          />
-          <span
-            className={`mt-1.5 block h-px w-5 bg-forest transition-all duration-300 ${open ? "opacity-0" : ""}`}
-          />
-          <span
-            className="mt-1.5 block h-px w-5 bg-forest transition-transform duration-500"
-            style={{
-              transform: open ? "translateY(-9px) rotate(-45deg)" : undefined,
-              transitionTimingFunction: "cubic-bezier(0.34, 1.56, 0.64, 1)",
-            }}
+          <MorphIcon
+            icon={open ? X : Menu}
+            size={22}
+            color="currentColor"
+            strokeWidth={1.75}
+            reducedMotion="user"
           />
         </button>
       </div>
       <nav
-        className={`mobile-nav md:hidden ${open ? "is-open" : ""}`}
+        className={`mobile-nav lg:hidden ${open ? "is-open" : ""}`}
         aria-hidden={!open}
       >
         <div className="flex flex-col gap-2 px-4 py-4">

@@ -3,6 +3,8 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ChatWidget } from "@/components/ChatWidget";
+import { EnquiryPulse } from "@/components/EnquiryPulse";
+import { MotionRoot } from "@/components/MotionRoot";
 import { site } from "@/lib/site";
 
 const news = Newsreader({
@@ -64,10 +66,13 @@ export default function RootLayout({
         className="flex min-h-full flex-col bg-paper text-ink antialiased"
         suppressHydrationWarning
       >
-        <Header />
-        <main className="flex-1 pb-24 sm:pb-8">{children}</main>
-        <Footer />
-        <ChatWidget />
+        <MotionRoot>
+          <Header />
+          <main className="flex-1 pb-24 sm:pb-8">{children}</main>
+          <Footer />
+          <ChatWidget />
+          <EnquiryPulse />
+        </MotionRoot>
       </body>
     </html>
   );

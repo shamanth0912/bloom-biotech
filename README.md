@@ -11,6 +11,10 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+## Motion
+
+Home uses Lenis (smooth scroll, off when `prefers-reduced-motion`) and Framer Motion for section reveals. Inner pages stay as they are.
+
 ## Ask Bloom (chatbot)
 
 The floating **Ask Bloom** widget answers from the company catalogue (products, IIHR licence, plant, quotes). It works without an API key.

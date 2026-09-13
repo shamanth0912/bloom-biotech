@@ -5,13 +5,13 @@ import { site } from "@/lib/site";
 const stats = [
   { kind: "num" as const, value: 5, decimals: 1, label: "Google rating", note: `${site.googleReviews} reviews` },
   { kind: "num" as const, value: products.length, decimals: 0, label: "Catalogue SKUs", note: "bio + biocontrol" },
-  { kind: "text" as const, value: "IIHR", label: "AMC licence", note: "solid & liquid" },
-  { kind: "text" as const, value: "09:30", label: "Plant opens", note: "Chikkamagaluru" },
+  { kind: "text" as const, value: "IIHR", label: "AMC + ACT", note: "first AMC licence, India" },
+  { kind: "text" as const, value: "2013", label: "Started", note: "Chikkamagaluru plant" },
 ];
 
 export function StatsStrip() {
   return (
-    <section aria-label="Plant facts" className="border-y border-forest/10 bg-white/40">
+    <section aria-label="Plant facts" id="trust" className="border-y border-forest/10 bg-white/40">
       <div className="mx-auto grid max-w-6xl sm:grid-cols-2 lg:grid-cols-4">
         {stats.map((s, i) => (
           <div

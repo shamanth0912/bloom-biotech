@@ -15,23 +15,18 @@ export type ChatAnswer = {
 export const welcomeAnswer: ChatAnswer = {
   title: "Ask Bloom AI",
   summary:
-    "I brief farmers, dealers, estates, and KVKs on Bloom Biotech products and how they are used. Ask about a crop, a pack name, or AMC. I explain what it is, why it is used, and how to apply it. Prices are quoted by the plant after crop and acres.",
+    "I brief the Bloom Biotech catalogue from the company brochure: IIHR-licensed AMC, ACT, biocontrols, compost culture, and imported nutrition. Ask for a pack name, a pest, or how to apply AMC. Prices are quoted by the plant. Labels win if they differ.",
   bullets: [
-    "Bloom Biotech is a Chikkamagaluru plant making microbial biofertilizers and biocontrols.",
-    "Flagship: ICAR-IIHR licensed Arka Microbial Consortium (solid and liquid).",
-    "Ask a crop (coffee, nursery, vegetables) for a short programme, not just a name list.",
+    "Bloom Biotech, Chikkamagaluru. Started 2013. Collaboration with ICAR-IIHR.",
+    "First in India to licence AMC (Bio Sanjiveeni powder, Bhu Samruddhi liquid) and Arka Fermented Cocopeat.",
+    "ACT licensed in 2015 as Bio Astra. No published price list.",
   ],
   links: [
     { label: "Products", href: "/products" },
     { label: "Quote", href: "/enquire" },
     { label: "Company", href: "/about" },
   ],
-  followUps: [
-    "What is AMC?",
-    "Plant address & phone",
-    "Coffee nursery pack",
-    "Dealer quote",
-  ],
+  followUps: ["What is AMC?", "Plant address & phone", "Coffee berry borer", "Compost culture"],
 };
 
 const nav = {
@@ -43,68 +38,43 @@ const nav = {
   whatsapp: { label: "WhatsApp", href: whatsappUrl() },
   about: { label: "Company", href: "/about" },
   products: { label: "All products", href: "/products" },
-  gallery: { label: "Photos", href: "/gallery" },
-  journal: { label: "Journal", href: "/journal" },
 };
 
 function explain(p: Product) {
-  return `${p.name} (${p.category}): ${p.short} Typical use: ${p.use}. Pack: ${p.pack}.`;
+  return `${p.name} (${p.technology}): ${p.short} Use: ${p.usage.map((u) => `${u.title} ${u.text}`).join("; ")}`;
 }
 
 function matchProducts(q: string) {
   const hay = q.toLowerCase();
+  const tokens = hay.split(/[^a-z0-9]+/).filter((t) => t.length > 2);
   return products.filter((p) => {
-    const blob = `${p.name} ${p.slug} ${p.category} ${p.crops.join(" ")} ${p.short}`.toLowerCase();
-    return hay.split(/[^a-z0-9]+/).some((t) => t.length > 2 && blob.includes(t));
+    const blob = `${p.name} ${p.slug} ${p.aliases.join(" ")} ${p.category} ${p.technology} ${p.targets} ${p.actives} ${p.short}`.toLowerCase();
+    return tokens.some((t) => blob.includes(t));
   });
-}
-
-function cropHits(q: string) {
-  const hay = q.toLowerCase();
-  const crops = [
-    "coffee",
-    "nursery",
-    "vegetable",
-    "horticulture",
-    "arecanut",
-    "pepper",
-    "banana",
-    "plantation",
-  ];
-  const found = crops.filter((c) => hay.includes(c));
-  if (!found.length) return [];
-  const scored = products.map((p) => {
-    const blob = `${p.name} ${p.crops.join(" ")} ${p.short} ${p.use}`.toLowerCase();
-    const hits = found.filter(
-      (f) => blob.includes(f) || p.crops.some((c) => c.toLowerCase().includes(f)),
-    );
-    return { p, n: hits.length };
-  });
-  return scored
-    .filter((s) => s.n > 0)
-    .sort((a, b) => b.n - a.n)
-    .map((s) => s.p);
 }
 
 export function answerQuestion(question: string, priorUser: string[] = []): ChatAnswer {
   const q = question.toLowerCase().trim();
   const ctx = `${priorUser.slice(-2).join(" ")} ${question}`.toLowerCase();
+  const sanj = products.find((p) => p.slug === "bio-sanjiveeni")!;
+  const bhu = products.find((p) => p.slug === "bhu-samruddhi")!;
+  const astra = products.find((p) => p.slug === "bio-astra")!;
+  const blu = products.find((p) => p.slug === "bluderma")!;
+  const compost = products.find((p) => p.slug === "bloom-compost-culture")!;
+  const hit = products.find((p) => p.slug === "bio-hit")!;
 
-  if (
-    /phone|call|whatsapp|email|address|where|location|map|hour|open|contact/.test(q)
-  ) {
+  if (/phone|call|whatsapp|email|address|where|location|map|hour|open|contact/.test(q)) {
     return {
       title: "Plant & contact",
-      summary: `Bloom Biotech manufactures from a plant at ${site.addressLines.join(", ")}. Public hours start at 9:30 am. WhatsApp is the fastest way to get a pack list. Include crop, acres, and solid vs liquid when you write.`,
+      summary: `Bloom Biotech, Assessment Number 10, 5th Phase KHB Colony, CMC Ward No. 1, K.M. Road, Chikkamagaluru 577102. Customer care ${site.phoneDisplay}. Email ${site.email}. Website ${site.website}.`,
       bullets: [
         `Phone / WhatsApp: ${site.phoneDisplay}`,
         `Email: ${site.email}`,
-        `${site.hours} · Chikkamagaluru, Karnataka`,
-        "Same form for farmers, dealers, estates, and KVKs.",
+        site.addressLines.join(", "),
+        `${site.hours} · ${site.website}`,
       ],
-      cta: "WhatsApp is usually faster than email on a working day.",
       links: [nav.whatsapp, nav.quote, { label: "Maps", href: site.maps }],
-      followUps: ["How do I get a quote?", "What is AMC?", "Who do you sell to?"],
+      followUps: ["How do I get a quote?", "What is AMC?", "List of products"],
     };
   }
 
@@ -112,82 +82,98 @@ export function answerQuestion(question: string, priorUser: string[] = []): Chat
     return {
       title: "How quoting works",
       summary:
-        "Bloom does not publish a price list or run checkout on this site. The plant quotes after it knows crop, area, and whether you need solid or liquid packs. Dealers should say if the order is for stock or a named estate. WhatsApp the same number farmers use.",
+        "The brochure does not print prices. The plant quotes after crop, area, and solid vs liquid. WhatsApp or email the same contacts on the pack.",
       bullets: [
-        "Send crop, acres (or seedling count), and solid vs liquid.",
-        "Farmers, dealers, estates, and KVKs use one enquiry form.",
-        `WhatsApp ${site.phoneDisplay} for a same-day reply during plant hours.`,
-        "Bottle labels still win on dose if they differ from this briefing.",
+        "Send crop, acres or seedling count, and powder vs liquid.",
+        `WhatsApp ${site.phoneDisplay} or email ${site.email}.`,
+        "Pouch and bottle labels still win on dose and CFU.",
+        "Jackpot, Fulcare, Calcare, NutriCare C2 are imported; no repacking in India.",
       ],
       links: [nav.quote, nav.whatsapp, nav.products],
-      followUps: ["Coffee nursery pack", "List of products", "Plant address & phone"],
+      followUps: ["What is AMC?", "List of products", "Plant address & phone"],
     };
   }
 
   if (
-    (/dose|how to use|application|fym|drench|seed treatment|per acre/.test(q) &&
-      /amc|arka|consortium/.test(ctx)) ||
+    (/dose|how to use|application|fym|drench|drip|per acre/.test(q) &&
+      /amc|arka|consortium|sanjiv|bhu/.test(ctx)) ||
     /amc dose/.test(q)
   ) {
     return {
-      title: "AMC - how to use",
+      title: "AMC how to use",
       summary:
-        "Arka Microbial Consortium is meant to be simple: one inoculant instead of separate N-fixers, P and Zn solubilizers, and growth bacteria. IIHR’s published protocol is for vegetables and horticulture; coffee estates use the same routes in nursery media and with FYM. Always follow the pack in hand.",
+        "Bio Sanjiveeni is powder AMC. Bhu Samruddhi is liquid AMC. Follow the pack in hand if CFU or dose differs.",
       bullets: [
-        "Seed treatment: 10-20 g inoculum for 100-200 g vegetable seed.",
-        "Coco-peat: 1 kg AMC is enough to enrich 1 tonne of media.",
-        "Drench: mix 20 g per litre and apply at the root zone after transplant.",
-        "Main field: 5 kg AMC mixed into 500 kg FYM per acre near roots.",
-        "IIHR notes stronger seedlings and transplant a few days earlier in veg nurseries.",
+        "Sanjiveeni soil drench: 1 kg in 40 L, drench the root system.",
+        "Sanjiveeni FYM: 5-10 kg in 1 MT FYM or compost; apply after 7-10 days.",
+        "Sanjiveeni drip: 1 kg in 40 L, filter, fertigate.",
+        "Bhu Samruddhi: 10 ml/L foliar spray or drip.",
+        "Do not mix with antibiotics, pesticides, or insecticides.",
       ],
-      links: [
-        { label: "AMC product", href: "/products/arka-microbial-consortium" },
-        { label: "How AMC works", href: "/journal/what-arka-microbial-consortium-does" },
-        nav.quote,
-      ],
-      followUps: ["Coffee nursery pack", "Trichoderma for nursery", "Get a quote"],
+      links: [nav.product(sanj), nav.product(bhu), nav.quote],
+      followUps: ["What is Bio Astra?", "Compost culture", "Get a quote"],
     };
   }
 
-  if (/amc|arka|consortium|iihr|licence|license/.test(q) && !/nursery pack|coffee nursery/.test(q)) {
+  if (/amc|arka microbial|sanjiv|bhu samruddhi|consortium/.test(q) && !/actino|astra/.test(q)) {
     return {
       title: "Arka Microbial Consortium",
       summary:
-        "AMC is Bloom’s flagship. It is an ICAR-IIHR technology: nitrogen-fixing, phosphorus and zinc solubilizing, and plant-growth microbes in one solid or liquid. Bloom Biotech (Suhas Mohan, Chikkamagaluru) is on IIHR’s public licence list. IIHR reports 5-15% vegetable yield movement and 25-30% less N and P fertiliser when the protocol is followed. It does not replace compost, drainage, or shade in coffee.",
+        "Bloom was the first company in India to licence AMC from IIHR. Powder pack: Bio Sanjiveeni. Liquid pack: Bhu Samruddhi. Actives: Pseudomonas taiwanensis, Azotobacter tropicalis, Bacillus aryabhattai. Suitable for all crops. Soil-borne targets include Pythium, Phytophthora, Rhizoctonia, Fusarium, Botrytis, Sclerotium, Sclerotinia, Ustilago.",
       bullets: [
-        "Licensed AMC solid and liquid from the Chikkamagaluru plant.",
-        "One pack instead of three separate inoculants.",
-        "Use on seed, coco-peat, as a drench, or mixed with FYM.",
-        "Ask for solid vs liquid when you quote. Label dose wins.",
+        `Sanjiveeni CFU ≥ 1 × 10⁹ per g (brochure). ${sanj.use}.`,
+        `Bhu Samruddhi CFU ≥ 1 × 10⁸ per ml. Dose 10 ml/L.`,
+        "Eliminates separate N-fixer, PSB, and Pseudomonas packets.",
+        "Do not mix with antibiotics, pesticides, or insecticides.",
       ],
-      cta: "Open the product page for the four application routes.",
-      links: [
-        { label: "AMC product", href: "/products/arka-microbial-consortium" },
-        nav.quote,
-        { label: "How AMC works", href: "/journal/what-arka-microbial-consortium-does" },
+      links: [nav.product(sanj), nav.product(bhu), nav.quote],
+      followUps: ["AMC dose", "Bio Astra ACT", "Get a quote"],
+    };
+  }
+
+  if (/actino|bio astra|\bact\b/.test(q)) {
+    return {
+      title: astra.name,
+      summary: explain(astra),
+      bullets: [
+        astra.actives,
+        astra.cfu,
+        ...astra.usage.map((u) => `${u.title}: ${u.text}`),
+        astra.precaution,
       ],
-      followUps: ["AMC dose per acre", "Coffee nursery pack", "Other products"],
+      links: [nav.product(astra), nav.quote],
+      followUps: ["What is AMC?", "Bluderma", "Get a quote"],
+    };
+  }
+
+  if (/compost|coffee pulp|coco-peat compost|fermented coco/.test(q)) {
+    return {
+      title: compost.name,
+      summary: explain(compost),
+      bullets: compost.usage.map((u) => `${u.title}: ${u.text}`),
+      links: [nav.product(compost), nav.quote],
+      followUps: ["What is AMC?", "Get a quote"],
+    };
+  }
+
+  if (/berry borer|coffee borer|beauveria/.test(q)) {
+    return {
+      title: hit.name,
+      summary: explain(hit),
+      bullets: [hit.targets, ...hit.usage.map((u) => `${u.title}: ${u.text}`), hit.precaution],
+      links: [nav.product(hit), nav.quote],
+      followUps: ["Bio Ace for sucking pests", "Get a quote"],
     };
   }
 
   if (/coffee/.test(q) && /nursery|seedling|coco/.test(q)) {
-    const amc = products.find((p) => p.slug === "arka-microbial-consortium")!;
-    const tri = products.find((p) => p.slug === "bluderma")!;
-    const root = products.find((p) => p.slug === "root-care")!;
     return {
-      title: "Coffee nursery pack",
+      title: "Coffee nursery from the brochure",
       summary:
-        "A coffee nursery in the Western Ghats fails from wet media and weak roots more often than from a missing foliar. Bloom’s usual briefing is AMC in coco-peat for biology, Bluderma (Trichoderma) against damping-off, and Root Care at transplant if white roots look thin. Sanjiveeni or Bhu Samruddhi belong more in the field with FYM, not as the first nursery bottle. Trays still need air, timed water, and clean media. Trichoderma cannot outrun a puddle.",
-      bullets: [
-        explain(amc),
-        explain(tri),
-        explain(root),
-        "Nursery pairing: enrich coco-peat with AMC, then a Trichoderma drench or mix.",
-        "Tell the plant seedling count and whether you already use coco-peat.",
-      ],
-      cta: "Quote with seedling numbers. Bottle labels still govern dose.",
-      links: [nav.product(amc), nav.product(tri), nav.product(root), nav.quote],
-      followUps: ["AMC dose per acre", "What is Trichoderma for?", "Get a quote"],
+        "The brochure does not print a named nursery kit. For media, Bloom Compost Culture ferments raw moist coco-peat (4 kg culture + 4 kg urea per tonne, 30-40 days). For biology in the root zone use Bio Sanjiveeni or Bhu Samruddhi. For damping-off use Bluderma (Trichoderma).",
+      bullets: [explain(compost), explain(sanj), explain(blu)],
+      links: [nav.product(compost), nav.product(sanj), nav.product(blu), nav.quote],
+      followUps: ["AMC dose", "Coffee berry borer", "Get a quote"],
     };
   }
 
@@ -195,26 +181,36 @@ export function answerQuestion(question: string, priorUser: string[] = []): Chat
     return {
       title: "Product range",
       summary:
-        "Bloom sells microbial biofertilizers, biocontrols, and soil-health inputs. The licence spine is Arka Microbial Consortium. Commercial names farmers already ask for include Bio Sanjiveeni, Bhu Samruddhi, Bluderma (Trichoderma), Blumonas (Pseudomonas), Root Care, Bio Vanish for nematodes, and a decomposer for farm waste. Beauty-salon listings on IndiaMART are noise and are ignored here.",
-      bullets: products.slice(0, 7).map((p) => `${p.name}: ${p.short}`),
-      cta: "Tap a name for crops and how to apply it.",
+        "IIHR line: Bio Sanjiveeni (AMC powder), Bhu Samruddhi (AMC liquid), Bio Astra (ACT), Bluderma, Blumonas, Bio Vanish, Bio Erase, Bio Hit, Bio Ace, Bloom Compost Culture. Imported nutrition: Jackpot, Fulcare, Calcare, NutriCare C2. AscoGold is amino acids plus seaweed at 3 ml/L.",
+      bullets: products.slice(0, 8).map((p) => `${p.name}: ${p.technology}`),
       links: [nav.products, nav.quote],
-      followUps: ["What is AMC?", "Trichoderma", "Nematode product"],
+      followUps: ["What is AMC?", "Imported products", "Get a quote"],
+    };
+  }
+
+  if (/import|jackpot|fulcare|calcare|nutricare|ascogold|humate|fulvic|seaweed/.test(q)) {
+    const imported = products.filter((p) => p.imported || p.slug === "ascogold");
+    return {
+      title: "Nutrition packs",
+      summary:
+        "Jackpot, Fulcare, Calcare, and NutriCare C2 are imported. Jackpot, Fulcare, and Calcare say no repacking in India. AscoGold is 3 ml/L foliar (amino acids + Ascophyllum nodosum).",
+      bullets: imported.map((p) => `${p.name}: ${p.short}`),
+      links: [...imported.slice(0, 3).map(nav.product), nav.quote],
+      followUps: ["Jackpot dose", "Calcare", "Get a quote"],
     };
   }
 
   if (/who are you|about the company|company overview|what is bloom/.test(q)) {
     return {
       title: "Bloom Biotech",
-      summary:
-        "Bloom Biotech is a green-biotechnology manufacturer in Chikkamagaluru, Karnataka, not a city trading desk. The plant sits on Hampapura Bypass Road at Joythinagar. Public records list a proprietorship, GST from 2018, and an ICAR-IIHR licence for Arka Microbial Consortium. The site is for farmers, dealers, coffee estates, and institutions such as KVKs.",
+      summary: site.description,
       bullets: [
-        "Microbial biofertilizers, biocontrols, and soil conditioners.",
-        "Licensed AMC solid and liquid (IIHR public licence list).",
-        `Contact ${site.phoneDisplay} or the quote form with crop and acres.`,
-        "Instagram @bloom_biotech shows nursery trays, field work, and the plant.",
+        "Green biotechnology. Production facility in Chikkamagaluru.",
+        "First in India to licence AMC and Arka Fermented Cocopeat from IIHR. ACT in 2015.",
+        `${site.addressLines.join(", ")}`,
+        `${site.phoneDisplay} · ${site.email}`,
       ],
-      links: [nav.about, nav.products, nav.gallery],
+      links: [nav.about, nav.products],
       followUps: ["What is AMC?", "Plant address & phone", "List of products"],
     };
   }
@@ -222,53 +218,47 @@ export function answerQuestion(question: string, priorUser: string[] = []): Chat
   const named = products.filter((p) => {
     const n = p.name.toLowerCase();
     const slug = p.slug.replace(/-/g, " ");
-    return q.includes(n) || q.includes(slug);
+    return q.includes(n) || q.includes(slug) || p.aliases.some((a) => q.includes(a));
   });
-  const byAlias = matchProducts(q);
-  const byCrop = cropHits(q);
-  const picked = named.length
-    ? named
-    : byCrop.length
-      ? byCrop.slice(0, 4)
-      : byAlias.slice(0, 4);
+  const picked = named.length ? named : matchProducts(q).slice(0, 4);
 
   if (picked.length === 1) {
     const p = picked[0];
     return {
       title: p.name,
-      summary: `${p.short} ${p.body[0] ?? ""} Crops on file: ${p.crops.join(", ")}.`,
+      summary: `${p.short} ${p.body[0] ?? ""}`,
       bullets: [
-        `${p.category} · ${p.pack}`,
-        `How it is used: ${p.use}`,
-        p.body[1] ?? "Ask the plant for the current technical sheet on large estate orders.",
-        "Prices are quoted. Send crop and acres.",
+        `${p.technology} · ${p.pack}`,
+        `Actives: ${p.actives}`,
+        `CFU: ${p.cfu}`,
+        ...p.usage.map((u) => `${u.title}: ${u.text}`),
+        p.precaution,
       ],
       links: [nav.product(p), nav.quote, nav.whatsapp],
-      followUps: ["How do I get a quote?", "Other products", "Coffee nursery pack"],
+      followUps: ["How do I get a quote?", "Other products", "What is AMC?"],
     };
   }
 
   if (picked.length > 1) {
     return {
       title: "What fits this query",
-      summary: `These packs are the closest match in Bloom’s catalogue. ${picked
+      summary: picked
         .slice(0, 4)
         .map((p) => p.name)
-        .join(", ")}. Each line below is what the product is for, not just a crop tag. Open a pack for the full briefing, or send crop and acres for a quote.`,
+        .join(", "),
       bullets: picked.slice(0, 4).map(explain),
-      cta: "If this is a coffee nursery, ask “coffee nursery pack” for the AMC + Trichoderma pairing.",
       links: [...picked.slice(0, 3).map(nav.product), nav.quote],
-      followUps: ["Coffee nursery pack", "What is AMC?", "How do I get a quote?"],
+      followUps: ["What is AMC?", "How do I get a quote?"],
     };
   }
 
   return {
-    title: "I don’t have that yet",
-    summary: `I can brief AMC, Trichoderma, soil packs, the Chikkamagaluru plant, and how to quote. I will not invent a price. For anything outside the catalogue, WhatsApp ${site.phoneDisplay}.`,
+    title: "I don’t have that in the brochure",
+    summary: `I only brief packs printed in the Bloom Biotech brochure. I will not invent a price or a yield percentage. WhatsApp ${site.phoneDisplay} or email ${site.email}.`,
     bullets: [
-      "Try a product name, or a crop such as coffee or nursery.",
-      "Ask how to use AMC if you need doses.",
-      "Dealers: include acres and solid vs liquid.",
+      "Try Bio Sanjiveeni, Bhu Samruddhi, Bio Astra, Bluderma, or compost culture.",
+      "Ask AMC dose for the 1 kg / 40 L and 10 ml/L figures.",
+      "Imported line: Jackpot, Fulcare, Calcare, NutriCare C2.",
     ],
     links: [nav.products, nav.quote, nav.whatsapp],
     followUps: ["List of products", "What is AMC?", "Plant address & phone"],
@@ -280,9 +270,7 @@ export function parseModelAnswer(raw: string, fallback: ChatAnswer): ChatAnswer 
     const jsonStart = raw.indexOf("{");
     const jsonEnd = raw.lastIndexOf("}");
     if (jsonStart < 0 || jsonEnd < 0) return compactText(raw, fallback);
-    const parsed = JSON.parse(raw.slice(jsonStart, jsonEnd + 1)) as Partial<ChatAnswer> & {
-      summary?: string;
-    };
+    const parsed = JSON.parse(raw.slice(jsonStart, jsonEnd + 1)) as Partial<ChatAnswer>;
     const bullets = (parsed.bullets ?? []).map(String).filter(Boolean).slice(0, 7);
     const summary = String(parsed.summary || "").trim();
     if (!summary && !bullets.length) return compactText(raw, fallback);
@@ -315,25 +303,22 @@ function compactText(raw: string, fallback: ChatAnswer): ChatAnswer {
   };
 }
 
-export const assistantSystemPrompt = `You are Ask Bloom AI, the on-site agronomy assistant for Bloom Biotech, Chikkamagaluru (green biotechnology: microbial biofertilizers and biocontrols).
+export const assistantSystemPrompt = `You are Ask Bloom AI for Bloom Biotech, Chikkamagaluru.
 
-Your job is to TEACH, then route. A user who taps "Coffee nursery pack" must leave knowing what to apply, why, and how, not a bare name list.
+Facts only from the knowledge excerpts (company brochure). Do not invent prices, yield percentages, GST numbers, or products not listed.
 
 Return ONLY JSON:
 {
   "title": "short heading",
-  "summary": "3 to 6 sentences. Explain the idea, the products, why they are paired, and any caution. Use plain language for farmers and dealers.",
-  "bullets": ["4 to 7 facts. Each can be up to 180 characters. Include use, crops, or dose when known."],
+  "summary": "3 to 6 sentences from the brochure.",
+  "bullets": ["doses, CFU, actives, precautions"],
   "cta": "one next step",
   "links": [{"label":"human label","href":"/products/..."}],
   "followUps": ["up to 4 short follow-up questions"]
 }
 
 Rules:
-- Facts only from the knowledge excerpts and conversation. Do not invent prices, yields, or licences.
-- If several products match, summarise EACH in the bullets (name + what it does + when to use). Never return only "Name - Crop".
-- Prefer IIHR AMC protocol numbers when the question is about AMC dose.
-- Say when something is nursery vs main field.
-- href must be a site path such as /products/arka-microbial-consortium or /enquire.
-- No em dashes. No filler. Do not claim to place an order.
+- Bio Sanjiveeni = AMC powder. Bhu Samruddhi = AMC liquid. Bio Astra = ACT (Streptomyces), licensed 2015.
+- Compost Culture doses: coffee pulp 2 kg/MT; FYM 3 kg/MT; green leaf 1 kg/MT; coco-peat 4 kg culture + 4 kg urea / MT.
+- href must be a site path. No em dashes. Do not claim to place an order.
 `;

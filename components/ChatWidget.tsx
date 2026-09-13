@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { ThinkingOrb } from "thinking-orbs";
 import { welcomeAnswer, type ChatAnswer } from "@/lib/assistant";
 import { AiMark } from "./AiMark";
 
@@ -338,7 +339,12 @@ export function ChatWidget() {
                 <AnswerCard key={m.id} answer={m.answer} onAsk={send} />
               ),
             )}
-            {busy ? <p className="text-xs text-muted">Summarising…</p> : null}
+            {busy ? (
+              <div className="flex items-center gap-2 text-xs text-muted">
+                <ThinkingOrb state="composing" size={20} theme="light" />
+                Reading the catalogue…
+              </div>
+            ) : null}
           </div>
 
           <form

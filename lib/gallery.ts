@@ -1,46 +1,53 @@
 export const heroPhoto = {
-  src: "https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?auto=format&fit=crop&w=1400&q=80",
-  alt: "Hand tending seedlings in a nursery tray",
-  caption: "Nursery trays - where AMC and Trichoderma earn their keep.",
-  kicker: "Nursery · AMC + Trichoderma",
-  credit: "Unsplash",
+  src: "/photos/coffee.png",
+  alt: "Hands cupping a seedling in soil",
+  caption: "Green biotechnology from Chikkamagaluru.",
+  kicker: "Bloom Biotech",
+  credit: "Bloom Biotech brochure",
 };
 
-export const gallery = [
+export type GalleryPlate = {
+  src: string;
+  alt: string;
+  kicker: string;
+  caption: string;
+  credit: string;
+};
+
+export const gallery: readonly GalleryPlate[] = [
   {
-    src: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1400&q=80",
-    alt: "Ripe coffee cherries on a branch",
-    caption: "Coffee belt around Chikkamagaluru - the market this plant is built for.",
-    credit: "Unsplash",
+    src: "/photos/pepper.png",
+    alt: "Black pepper vine",
+    kicker: "Pepper",
+    caption: "Horticulture crops named on the AMC story: pepper, pomegranate, floriculture.",
+    credit: "Bloom Biotech brochure",
   },
   {
-    src: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=1400&q=80",
-    alt: "Hands working agricultural soil",
-    caption: "Root-zone soil. Biology has to survive this, not a lab poster.",
-    credit: "Unsplash",
+    src: "/photos/pomegranate.png",
+    alt: "Pomegranate fruit",
+    kicker: "Pomegranate",
+    caption: "Target crops on the IIHR collaboration pages include pomegranate.",
+    credit: "Bloom Biotech brochure",
   },
   {
-    src: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=1400&q=80",
-    alt: "Plants in a horticulture greenhouse",
-    caption: "Horticulture blocks on coco-peat and fertigation.",
-    credit: "Unsplash",
+    src: "/photos/seedling.png",
+    alt: "Ripe coffee berries",
+    kicker: "Coffee berries",
+    caption: "Coffee country. Production facility in Chikkamagaluru.",
+    credit: "Bloom Biotech brochure",
   },
   {
-    src: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1400&q=80",
-    alt: "Open vegetable field",
-    caption: "Open-field vegetables: seed treatment and FYM mix.",
-    credit: "Unsplash",
+    src: "/photos/founders.png",
+    alt: "Bloom Biotech team photograph from the brochure",
+    kicker: "The plant · 2013",
+    caption: "Started 2013. First in India to licence AMC and Arka Fermented Cocopeat.",
+    credit: "Bloom Biotech brochure",
   },
   {
-    src: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1400&q=80",
-    alt: "Laboratory flasks used in microbial work",
-    caption: "Production is a plant: batches, labels, and licensed cultures.",
-    credit: "Unsplash",
+    src: "/photos/coffee.png",
+    alt: "Hands cupping a seedling in soil",
+    kicker: "Seedling in hand",
+    caption: "Technical assistance to farmers is printed as the company mission.",
+    credit: "Bloom Biotech brochure",
   },
-  {
-    src: "https://images.unsplash.com/photo-1574943320219-553eb213f72d?auto=format&fit=crop&w=1400&q=80",
-    alt: "Farmer walking a crop field",
-    caption: "Farmers, dealers, and estates quote by crop and acres.",
-    credit: "Unsplash",
-  },
-] as const;
+];

@@ -5,6 +5,22 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: process.cwd(),
   },
+  async redirects() {
+    return [
+      {
+        source: "/products/arka-microbial-consortium",
+        destination: "/products/bio-sanjiveeni",
+        permanent: true,
+      },
+      {
+        source: "/products/decomposer",
+        destination: "/products/bloom-compost-culture",
+        permanent: true,
+      },
+      { source: "/products/bio-charge", destination: "/products", permanent: true },
+      { source: "/products/root-care", destination: "/products", permanent: true },
+    ];
+  },
   images: {
     remotePatterns: [
       {

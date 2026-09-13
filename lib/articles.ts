@@ -10,54 +10,54 @@ export type Article = {
 export const articles: Article[] = [
   {
     slug: "what-arka-microbial-consortium-does",
-    title: "What Arka Microbial Consortium actually does in the field",
+    title: "Bio Sanjiveeni and Bhu Samruddhi: the two AMC packs",
     date: "2026-03-12",
     excerpt:
-      "One licensed IIHR formulation instead of three separate inoculants - and why that matters on coffee and vegetable ground.",
-    tags: ["AMC", "IIHR", "How-to"],
+      "Powder and liquid Arka Microbial Consortium from IIHR. Same strains, different application.",
+    tags: ["AMC", "IIHR", "Sanjiveeni"],
     body: [
-      "Most biofertilizer programmes fail because they are fiddly. A nitrogen fixer in one packet, a phosphate solubilizer in another, a zinc solubilizer if you remember. Arka Microbial Consortium (AMC) was designed at ICAR-IIHR so those jobs sit in a single carrier or liquid.",
-      "Bloom Biotech appears on IIHR’s active licence list for AMC solid and liquid. That is the difference between a generic ‘bacteria bottle’ and a technology with a public protocol.",
-      "IIHR’s published advantages are practical: 5-15% yield movement in vegetables, 25-30% less N and P fertiliser, stronger seedlings, and transplant a few days earlier. None of that replaces compost, drainage, or shade management in coffee.",
-      "Start simple. Treat seed. Enrich coco-peat in the nursery. Drench after transplant. Mix with FYM for the main field. If a dealer cannot tell you those four routes, they are selling a slogan.",
+      "On the Bloom brochure, Arka Microbial Consortium is two commercial packs. Bio Sanjiveeni is the carrier (powder). Bhu Samruddhi is the liquid. Both carry Pseudomonas taiwanensis, Azotobacter tropicalis, and Bacillus aryabhattai.",
+      "The powder is used as a soil drench (1 kg in 40 L), mixed into FYM or compost (5-10 kg per metric tonne, applied after 7-10 days), or filtered through drip (1 kg in 40 L). The liquid is 10 ml per litre as foliar spray or drip.",
+      "Bloom Biotech started in 2013 and states it was the first company in India to licence AMC from IIHR. Do not mix AMC with antibiotics, pesticides, or insecticides. Store cool and dry. The pouch or bottle in hand still governs dose and CFU if it differs from this note.",
     ],
   },
   {
     slug: "soil-biology-coffee-chikkamagaluru",
-    title: "Soil biology under coffee: notes from Chikkamagaluru",
+    title: "Coffee pulp, FYM, and coco-peat: Bloom Compost Culture",
     date: "2026-04-02",
     excerpt:
-      "Western Ghats estates run on organic matter. Microbes are how that matter becomes crop, not a luxury add-on.",
-    tags: ["Coffee", "Estates", "Soil"],
+      "IIHR Arka Fermented Cocopeat culture. Windrows that finish in 30-45 days.",
+    tags: ["Coffee", "Compost", "AFC"],
     body: [
-      "Coffee in this belt lives on leaf litter, shade, and rain that can drown a root as easily as it feeds it. Chemical NPK still has a place. What does not have a place is sterile soil under a beautiful canopy.",
-      "We see the same pattern on estate visits: high soluble fertiliser, thinning mulch, and then a request for a ‘tonic’ when white roots disappear. The tonic is usually compost plus a competent consortium, not a miracle foliar.",
-      "For managers: budget microbes next to lime and FYM, not next to pesticide. Ask for a programme by block, not a crate of mixed SKUs.",
+      "Bloom Compost Culture is the Aspergillus powder tied to IIHR Arka Fermented Cocopeat technology. Bloom was first in India to licence that technology.",
+      "Coffee pulp: 2 kg culture per metric tonne of pulp, windrow, 30-45 days. FYM: 3 kg per tonne, 45 days. Green leaf or farm waste: 1 kg per tonne, 30-40 days. Raw moist coco-peat: 4 kg culture plus 4 kg urea per tonne, 30-40 days.",
+      "Do not mix the culture with antibiotics, pesticides, or insecticides.",
     ],
   },
   {
     slug: "trichoderma-in-wet-nurseries",
-    title: "Trichoderma in wet nurseries, without magical thinking",
+    title: "Bluderma and Blumonas: what the brochure actually says",
     date: "2026-05-18",
     excerpt:
-      "Damping-off loves stagnant trays. Bluderma is a tool. Shade, drainage, and clean media are the system.",
-    tags: ["Nursery", "Trichoderma", "IPM"],
+      "Trichoderma harzianum / viride and Pseudomonas fluorescens. Drench, FYM, neem cake.",
+    tags: ["Bluderma", "Blumonas", "Nursery"],
     body: [
-      "If trays sit in a puddle, no fungus you buy will outrun Pythium. Trichoderma earns its keep when media is aerated, water is timed, and seedlings are not overcrowded.",
-      "Use a drench or a mix into coco-peat that has already been enriched - AMC plus Trichoderma is a common nursery pairing. Keep labels. Keep batch numbers. That is how dealers and KVKs take you seriously.",
+      "Bluderma is Trichoderma harzianum / viride for damping-off, wilt, root rot, charcoal rot, and collar rot. Carrier CFU 10⁷ per g; liquid 10⁹ per ml.",
+      "Blumonas is Pseudomonas fluorescens for soil-borne and foliar diseases (mildews, anthracnose, blast, blights, rots). Carrier CFU 10⁹ per g; liquid 10¹¹ per ml.",
+      "Both: 1 kg in 40 L as a root drench; 10 kg in 1 MT FYM or compost, apply after 7-10 days; 1 kg in 50 kg neem cake, apply after 1 week. Do not mix with fungicides, pesticides, or insecticides.",
     ],
   },
   {
     slug: "how-dealers-should-quote-microbials",
-    title: "How dealers should quote microbials without overselling",
+    title: "Two catalogues on one board: IIHR biology and imported nutrition",
     date: "2026-06-09",
     excerpt:
-      "Farmers remember the season, not the brochure. Quote dose, crop, and what the product will not do.",
-    tags: ["Dealers", "Sales"],
+      "AMC, ACT, biocontrols, and compost culture are IIHR-linked. Jackpot, Fulcare, Calcare, and NutriCare C2 are imported.",
+    tags: ["Dealers", "Catalogue"],
     body: [
-      "A good quote names the crop, acres, formulation (solid vs liquid), and whether the farmer already uses FYM. A bad quote is a price per bottle with a 40% yield claim.",
-      "Bloom Biotech can support dealer boards with pack photos, IIHR licence context, and a simple enquiry form from this site. If you stock Van Iperen water-solubles alongside our biology, say so - farmers already mix programmes.",
-      "We would rather lose a rushed order than a reputation in one taluk.",
+      "Quote the IIHR line and the imported nutrition line as separate stories. Bio Sanjiveeni, Bhu Samruddhi, Bio Astra, Bluderma, Blumonas, Bio Vanish, Bio Erase, Bio Hit, Bio Ace, and Bloom Compost Culture sit with the IIHR collaboration.",
+      "Jackpot (potassium humate), Fulcare (potassium fulvate), Calcare (fulvic + 30% Ca), and NutriCare C2 (EDTA micronutrients) are marked imported. Packs say no repacking in India. AscoGold is the amino acid plus Ascophyllum seaweed foliar at 3 ml/L.",
+      "Do not invent prices or yield percentages. Send crop, area, and solid vs liquid to +91 88845 68019 or bloombiotech@gmail.com.",
     ],
   },
 ];

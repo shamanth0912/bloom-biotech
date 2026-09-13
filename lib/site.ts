@@ -1,19 +1,21 @@
 export const site = {
   name: "Bloom Biotech",
   tagline: "Green biotechnology",
-  headline: "Soil biology for Western Ghats farms",
+  headline: "Biology for farms in coffee country",
   description:
-    "Bloom Biotech manufactures and supplies microbial biofertilizers, biocontrols, and soil health inputs from Chikkamagaluru, Karnataka. Licensed producer of ICAR-IIHR Arka Microbial Consortium.",
+    "Bloom Biotech is an agri-biotech company in Chikkamagaluru, Karnataka, in technological collaboration with ICAR-IIHR. First in India to licence Arka Microbial Consortium (AMC) and Arka Fermented Cocopeat; licensed Arka Actino Consortium (ACT) in 2015. Production since 2013.",
+  founded: "2013",
+  website: "https://www.bloombiotech.co.in",
   phone: "8884568019",
   phoneDisplay: "+91 88845 68019",
-  email: "suhasmohan82@gmail.com",
+  email: "bloombiotech@gmail.com",
   instagram: "https://www.instagram.com/bloom_biotech/",
   facebook: "https://www.facebook.com/bloombiotech/",
   maps:
-    "https://www.google.com/maps/search/?api=1&query=Bloom+Biotech+Chikkamagaluru",
+    "https://www.google.com/maps/search/?api=1&query=Bloom+Biotech+KHB+Colony+K.M.+Road+Chikkamagaluru",
   addressLines: [
-    "Sy No 259/1, Hampapura Bypass Road",
-    "Beekanahalli Village Limit, Joythinagar Post",
+    "Assessment Number 10, 5th Phase KHB Colony",
+    "CMC Ward No. 1, K.M. Road",
     "Chikkamagaluru, Karnataka 577102",
   ],
   hours: "Opens 9:30 am",

@@ -7,77 +7,77 @@ import { whatsappUrl } from "@/lib/site";
 
 const scenes = [
   {
-    id: "nursery",
-    label: "Coffee nursery",
-    kicker: "Trays & coco-peat",
-    title: "Biology first. Then Trichoderma. Then roots.",
-    body: "Wet Western Ghats nurseries fail from puddles and thin white roots more than from a missing foliar. AMC in the media, Bluderma against damping-off, Root Care at transplant if roots look weak.",
-    caution: "Trichoderma cannot outrun a puddle. Air, timed water, clean media.",
-    packs: [
-      { name: "Arka Microbial Consortium", href: "/products/arka-microbial-consortium" },
-      { name: "Bluderma (Trichoderma)", href: "/products/bluderma" },
-      { name: "Root Care", href: "/products/root-care" },
-    ],
-    wa: "Hello Bloom Biotech, I need a coffee nursery pack quote. Seedling count:",
-  },
-  {
-    id: "estate",
-    label: "Coffee / estate",
-    kicker: "Blocks, not crates",
-    title: "Quote the block. Mix FYM. Do not buy a tonic.",
-    body: "Estates around Chikkamagaluru run on litter, shade, and rain that can drown a root. Sanjiveeni and Bhu Samruddhi sit with manure in the field. AMC still belongs in the nursery and the FYM mix.",
-    caution: "We quote by block and acres. No published price list.",
+    id: "amc",
+    label: "AMC",
+    kicker: "IIHR consortium",
+    title: "Powder or liquid. Same three strains.",
+    body: "Bio Sanjiveeni is carrier AMC. Bhu Samruddhi is liquid AMC. Actives: Pseudomonas taiwanensis, Azotobacter tropicalis, Bacillus aryabhattai. Bloom was first in India to licence AMC from IIHR.",
+    caution: "Do not mix with antibiotics, pesticides, or insecticides. Label CFU wins.",
     packs: [
       { name: "Bio Sanjiveeni", href: "/products/bio-sanjiveeni" },
       { name: "Bhu Samruddhi", href: "/products/bhu-samruddhi" },
-      { name: "AMC", href: "/products/arka-microbial-consortium" },
     ],
-    wa: "Hello Bloom Biotech, estate / coffee block quote. Acres and taluk:",
+    wa: "Hello Bloom Biotech, quote for AMC (Bio Sanjiveeni / Bhu Samruddhi). Crop and area:",
   },
   {
-    id: "veg",
-    label: "Vegetables",
-    kicker: "Seed to FYM",
-    title: "One consortium instead of three bottles.",
-    body: "IIHR’s AMC protocol is seed, coco-peat, drench, then FYM in the main field. Blumonas if you already run an intensive vegetable block and want Pseudomonas in the root zone.",
-    caution: "Label dose on the pack in hand still wins.",
+    id: "coffee",
+    label: "Coffee",
+    kicker: "Pulp, berry borer, media",
+    title: "Compost the pulp. Hit the borer. Ferment coco-peat.",
+    body: "Bloom Compost Culture: 2 kg per tonne of coffee pulp, 30-45 days. Bio Hit (Beauveria bassiana) lists coffee berry borer. Raw coco-peat: 4 kg culture plus 4 kg urea per tonne, 30-40 days.",
+    caution: "Do not mix compost culture with antibiotics, pesticides, or insecticides.",
     packs: [
-      { name: "AMC", href: "/products/arka-microbial-consortium" },
+      { name: "Bloom Compost Culture", href: "/products/bloom-compost-culture" },
+      { name: "Bio Hit", href: "/products/bio-hit" },
+      { name: "Bio Sanjiveeni", href: "/products/bio-sanjiveeni" },
+    ],
+    wa: "Hello Bloom Biotech, coffee quote (pulp compost / berry borer / AMC). Acres or tonnes:",
+  },
+  {
+    id: "disease",
+    label: "Soil disease",
+    kicker: "Trichoderma · Pseudomonas · ACT",
+    title: "Bluderma, Blumonas, or Bio Astra.",
+    body: "Bluderma is Trichoderma for damping-off, wilt, and root rot. Blumonas is Pseudomonas fluorescens for mildews, blast, and blights. Bio Astra is Arka Actino Consortium (three Streptomyces strains), licensed in 2015.",
+    caution: "Do not mix these packs with fungicides, pesticides, or insecticides.",
+    packs: [
+      { name: "Bluderma", href: "/products/bluderma" },
       { name: "Blumonas", href: "/products/blumonas" },
-      { name: "Decomposer", href: "/products/decomposer" },
+      { name: "Bio Astra", href: "/products/bio-astra" },
     ],
-    wa: "Hello Bloom Biotech, vegetable programme quote. Crop and acres:",
+    wa: "Hello Bloom Biotech, soil-disease pack quote. Crop:",
   },
   {
-    id: "dealer",
-    label: "Dealer board",
-    kicker: "Stock with a story",
-    title: "Name the crop. Never a 40% yield claim.",
-    body: "A good board stocks AMC, a Trichoderma, a field biofertilizer, and Root Care. Farmers remember the season, not the brochure. Send acres and solid vs liquid when you reorder.",
-    caution: "We would rather lose a rushed order than a taluk’s trust.",
+    id: "nutrition",
+    label: "Nutrition",
+    kicker: "Imported line",
+    title: "Humate, fulvate, calcium, chelates.",
+    body: "Jackpot, Fulcare, Calcare, and NutriCare C2 are imported. No repacking in India on the humate/fulvate/calcium packs. AscoGold is 3 ml/L amino acids plus seaweed.",
+    caution: "Calcare: caution with high-phosphorus fertilizers.",
     packs: [
-      { name: "Full catalogue", href: "/products" },
-      { name: "How to quote", href: "/journal/how-dealers-should-quote-microbials" },
+      { name: "Jackpot", href: "/products/jackpot" },
+      { name: "Calcare", href: "/products/calcare" },
+      { name: "NutriCare C2", href: "/products/nutricare-c2" },
     ],
-    wa: "Hello Bloom Biotech, dealer stock quote. I need solid/liquid and these SKUs:",
+    wa: "Hello Bloom Biotech, imported nutrition quote (Jackpot / Fulcare / Calcare / NutriCare):",
   },
 ] as const;
 
 export function CropGuide() {
-  const [id, setId] = useState<(typeof scenes)[number]["id"]>("nursery");
+  const [id, setId] = useState<(typeof scenes)[number]["id"]>("amc");
   const scene = scenes.find((s) => s.id === id) ?? scenes[0];
 
   return (
     <section className="border-y border-forest/10 bg-white/35">
       <div className="mx-auto max-w-6xl px-4 py-14 md:py-16">
         <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
-          01 / Your ground
+          01 / Brochure
         </p>
         <h2 className="mt-2 max-w-xl font-serif text-3xl text-forest md:text-4xl">
-          Tap the crop. Get a briefing, not a brochure.
+          Tap a line. Get the printed dose.
         </h2>
         <p className="mt-3 max-w-lg text-sm text-muted">
-          Four real desks we quote for. Pick one. We will not invent a price.
+          Copy is from the Bloom Biotech brochure. We do not invent prices.
         </p>
 
         <div className="mt-8 flex gap-2 overflow-x-auto pb-1">

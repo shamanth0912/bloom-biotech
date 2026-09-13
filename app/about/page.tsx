@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Company",
-  description: "Bloom Biotech overview - Chikkamagaluru green biotechnology plant.",
+  description: "Bloom Biotech, Chikkamagaluru. IIHR collaboration since 2013.",
 };
 
 export default function AboutPage() {
@@ -12,60 +13,54 @@ export default function AboutPage() {
     <article className="mx-auto max-w-3xl px-4 py-16">
       <p className="text-xs uppercase tracking-[0.2em] text-soil">Overview</p>
       <h1 className="mt-3 font-serif text-4xl text-forest md:text-5xl">
-        A manufacturing plant in coffee country, not a trading desk in a city
-        mall.
+        Green biotechnology. Chikkamagaluru. IIHR collaboration.
       </h1>
+      <div className="relative mt-8 aspect-[4/5] max-w-md overflow-hidden border border-forest/10">
+        <Image
+          src="/photos/founders.png"
+          alt="Bloom Biotech from the company brochure"
+          fill
+          sizes="28rem"
+          className="object-cover"
+          priority
+        />
+      </div>
       <div className="mt-8 space-y-5 text-lg leading-relaxed text-muted">
         <p>
-          Bloom Biotech is an agri-biotechnology firm in Chikkamagaluru,
-          Karnataka. Public directories list the plant at Survey No. 259/1,
-          Hampapura Bypass Road, Beekanahalli / Joythinagar - on the main
-          approach, which is how Google reviewers find it.
+          Bloom Biotech is an innovative agri-biotech company in technological
+          collaboration with the Indian Institute of Horticultural Research
+          (IIHR). The company started in 2013.
         </p>
         <p>
-          The work is green biotechnology: microbial consortia, Trichoderma,
-          Pseudomonas, nematode management, compost decomposers, and soil
-          conditioners. IndiaMART shows the commercial names farmers already
-          ask for - Bio Sanjiveeni, Bhu Samruddhi, Bluderma, Blumonas, Bio
-          Astra, Bio Charge, Root Care, Bio Vanish, Bio Hit, Bio Erase.
+          It was the first company in India to licence Arka Microbial
+          Consortium (AMC) and Arka Fermented Cocopeat technologies from IIHR.
+          Arka Actino Consortium (ACT) was licensed in 2015. Commercial names:
+          Bio Sanjiveeni (AMC powder), Bhu Samruddhi (AMC liquid), Bio Astra
+          (ACT), and Bloom Compost Culture (AFC).
         </p>
         <p>
-          ICAR-IIHR’s active technology licence list names Bloom Biotech and
-          Suhas Mohan for Arka Microbial Consortium (solid and liquid). That
-          licence is the spine of the company story we tell institutions and
-          estates. Google’s knowledge panel also notes collaboration around
-          Arka Microbial Consortium and Arka Actino Consortium - we treat
-          that as a claim to verify on letterhead before you print a tender.
+          The brochure describes a state-of-the-art production facility in
+          Chikkamagaluru (coffee land). The printed mission is high-quality
+          biotechnology products and technical assistance to farmers for higher
+          yields at lower costs. Licensed AMC packs carry a 100% organic mark.
+          ICAR and IIHR logos appear on the brochure.
         </p>
         <p>
-          Instagram{" "}
-          <a className="text-leaf underline" href={site.instagram}>
-            @bloom_biotech
-          </a>{" "}
-          is the living scrapbook: tissue-culture / nursery trays, earthmoving
-          around organic matter, field sampling with buckets, and bags of
-          water-soluble NPK (Van Iperen 19-19-19). That last part matters - 
-          many customers run biology next to soluble nutrition, not instead of
-          it.
-        </p>
-        <p>
-          Legal shape in public records: proprietorship, GST registered in
-          Karnataka (2018), listed as manufacturer and retailer, roughly a
-          decade in market. bloombiotech.in currently says “launching soon”.
-          This site is the working presence: catalogue, journal, photos, and a
-          quote form.
+          The catalogue also includes biocontrols (Bluderma, Blumonas, Bio
+          Vanish, Bio Erase, Bio Hit, Bio Ace) and an imported nutrition line
+          (Jackpot, Fulcare, Calcare, NutriCare C2) plus AscoGold seaweed /
+          amino acids.
         </p>
       </div>
       <div className="mt-10 rounded-2xl border border-forest/10 bg-white/60 p-6">
-        <h2 className="font-serif text-2xl text-forest">Plant</h2>
-        <p className="mt-3 text-muted">
-          {site.addressLines.join(", ")}
-        </p>
+        <h2 className="font-serif text-2xl text-forest">Address on the brochure</h2>
+        <p className="mt-3 text-muted">{site.addressLines.join(", ")}</p>
         <p className="mt-2 text-muted">
-          {site.phoneDisplay} · {site.email} · {site.hours}
+          {site.phoneDisplay} · {site.email} · {site.website.replace("https://", "")}
         </p>
-        <div className="mt-4 flex gap-4 text-sm text-leaf">
+        <div className="mt-4 flex flex-wrap gap-4 text-sm text-leaf">
           <a href={site.maps}>Google Maps</a>
+          <a href={site.website}>bloombiotech.co.in</a>
           <Link href="/gallery">Photos</Link>
           <Link href="/enquire">Enquire</Link>
         </div>

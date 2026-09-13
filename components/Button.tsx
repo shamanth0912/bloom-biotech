@@ -23,7 +23,7 @@ export function Button({
   onClick,
 }: Props) {
   const ref = useRef<HTMLElement>(null);
-  const cls = `btn ${variant === "primary" ? "btn-primary" : "btn-ghost"} ${className}`;
+  const cls = `btn ${variant === "primary" ? "btn-primary" : "btn-ghost"} relative z-10 ${className}`;
 
   function onMove(e: React.MouseEvent) {
     const el = ref.current;

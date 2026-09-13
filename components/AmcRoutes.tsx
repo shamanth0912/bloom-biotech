@@ -6,44 +6,44 @@ import Link from "next/link";
 
 const routes = [
   {
-    id: "seed",
-    step: "01",
-    name: "Seed",
-    dose: "10-20 g AMC for 100-200 g vegetable seed",
-    why: "Coat the seed so the consortium is on the plant from day one. Farmers do not need a separate N-fixer packet.",
-    photo:
-      "https://images.unsplash.com/photo-1447903196606-76e102ef24f9?auto=format&fit=crop&w=1200&q=80",
-    alt: "Close-up of vegetable seeds ready for coating",
-  },
-  {
-    id: "media",
-    step: "02",
-    name: "Coco-peat",
-    dose: "1 kg AMC per tonne of nursery media",
-    why: "Coffee and horticulture trays live in coco-peat. Enrich the mix before sowing, not after damping-off starts.",
-    photo:
-      "https://images.unsplash.com/photo-1584747420644-5c767eebcbe6?auto=format&fit=crop&w=1200&q=80",
-    alt: "Hands holding brown coco-peat nursery media",
-  },
-  {
     id: "drench",
-    step: "03",
-    name: "Drench",
-    dose: "20 g per litre at the root zone after transplant",
-    why: "A short drench puts biology where white roots actually are. Follow the bottle if the pack in hand differs.",
-    photo:
-      "https://images.unsplash.com/photo-1515150144380-bca9f1650ed9?auto=format&fit=crop&w=1200&q=80",
-    alt: "Watering can drenching plants at the soil line",
+    step: "01",
+    name: "Soil drench",
+    dose: "1 kg Bio Sanjiveeni in 40 L water",
+    why: "Wet the entire root system. Do not mix with antibiotics, pesticides, or insecticides.",
+    photo: "/photos/amc/amc-01-soil-drench.png",
+    alt: "Mixing powder AMC into a water bucket, then drenching the root zone of a seedling",
+    fit: "cover" as const,
   },
   {
     id: "fym",
+    step: "02",
+    name: "FYM / compost",
+    dose: "5-10 kg Bio Sanjiveeni in 1 MT FYM",
+    why: "Apply to soil after 7-10 days of enrichment. Same route for Bio Astra (ACT).",
+    photo: "/photos/amc/amc-02-fym-compost.png",
+    alt: "Mixing powder AMC into a FYM heap, then applying enriched compost to the crop",
+    fit: "cover" as const,
+  },
+  {
+    id: "drip",
+    step: "03",
+    name: "Drip",
+    dose: "1 kg Bio Sanjiveeni in 40 L, filter, fertigate",
+    why: "Filter the solution before it enters the drip lines.",
+    photo: "/photos/amc/amc-03-drip-filter.png",
+    alt: "Filtering mixed AMC through cloth into a tank, then drip emitters at the root line",
+    fit: "cover" as const,
+  },
+  {
+    id: "liquid",
     step: "04",
-    name: "FYM / field",
-    dose: "5 kg AMC with 500 kg FYM per acre near roots",
-    why: "Main-field biology rides on manure you already have. This is not a foliar tonic and not a full NPK replacement.",
-    photo:
-      "https://images.unsplash.com/photo-1545333212-ffebc7933c12?auto=format&fit=crop&w=1200&q=80",
-    alt: "Hands holding farmyard manure and compost",
+    name: "Liquid AMC",
+    dose: "Bhu Samruddhi 10 ml/L foliar or drip",
+    why: "Same three strains as the powder, in liquid. Do not mix with antibiotics, pesticides, or insecticides.",
+    photo: "/photos/amc/amc-04-liquid-amc.png",
+    alt: "Measuring liquid AMC into a sprayer, with foliar mist and a drip line",
+    fit: "cover" as const,
   },
 ] as const;
 
@@ -123,12 +123,11 @@ export function AmcRoutes() {
         02b / How AMC moves
       </p>
       <h2 className="mt-2 max-w-xl font-serif text-3xl text-forest md:text-4xl">
-        Four routes. One licensed consortium.
+        Four AMC routes. One IIHR licence.
       </h2>
       <p className="mt-3 max-w-lg text-sm text-muted">
-        Swipe the photo or tap the arrows. After FYM the deck returns to seed.
-        IIHR protocol numbers for vegetables and horticulture. Coffee estates
-        use the same paths in nursery media and with FYM.
+        Four routes from the brochure. Powder AMC is Bio Sanjiveeni. Liquid AMC
+        is Bhu Samruddhi. Pack labels still win.
       </p>
 
       <div className="swipe-deck mt-8">
@@ -157,31 +156,39 @@ export function AmcRoutes() {
               onPointerUp={isTop ? onPointerUp : undefined}
               onPointerCancel={isTop ? onPointerUp : undefined}
             >
-              <div className="relative aspect-[4/5] w-full">
+              <div
+                className={`swipe-photo${card.fit === "contain" ? " is-pack" : ""}`}
+              >
                 <Image
                   src={card.photo}
                   alt={card.alt}
                   fill
                   draggable={false}
                   sizes="(min-width: 640px) 22rem, 85vw"
-                  className="object-cover"
-                  priority={card.id === "seed"}
+                  className={
+                    card.fit === "contain"
+                      ? "object-contain p-6"
+                      : "object-cover"
+                  }
+                  priority={card.id === "drench"}
                 />
                 <div className="swipe-title">
                   <p className="font-mono text-[11px] tracking-[0.2em] text-lime">
                     {card.step} / AMC
                   </p>
-                  <h3 className="font-serif text-4xl text-white">{card.name}</h3>
+                  <h3 className="font-serif text-[1.85rem] leading-none text-white sm:text-3xl">
+                    {card.name}
+                  </h3>
                 </div>
                 {isTop && stamp ? (
                   <span className={`swipe-stamp ${stamp}`}>{stamp}</span>
                 ) : null}
               </div>
-              <div className="p-4">
+              <div className="swipe-copy">
                 <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-leaf">
-                  {card.name} · dose
+                  Label dose
                 </p>
-                <p className="mt-1 font-serif text-xl leading-snug text-forest">
+                <p className="mt-1 font-serif text-lg leading-snug text-forest sm:text-xl">
                   {card.dose}
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{card.why}</p>
@@ -211,13 +218,21 @@ export function AmcRoutes() {
         </button>
       </div>
 
-      <p className="mt-5 text-center font-mono text-[11px] text-muted">
+      <div className="mt-5 flex items-center justify-center gap-2" aria-hidden>
+        {routes.map((r, i) => (
+          <span
+            key={r.id}
+            className={`swipe-dot ${i === index ? "is-on" : ""}`}
+          />
+        ))}
+      </div>
+      <p className="mt-3 text-center font-mono text-[11px] text-muted">
         {index + 1} / {COUNT} · swipe or tap the arrows
       </p>
 
       <p className="mt-4 text-center">
-        <Link href="/products/arka-microbial-consortium" className="nav-link text-sm">
-          Open AMC product
+        <Link href="/products/bio-sanjiveeni" className="nav-link text-sm">
+          Open Bio Sanjiveeni
         </Link>
       </p>
     </section>

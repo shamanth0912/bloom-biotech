@@ -15,14 +15,12 @@ export default function ProductsPage() {
       </p>
       <h1 className="mt-2 font-serif text-4xl text-forest">Products</h1>
       <p className="mt-3 max-w-2xl text-muted">
-        Names and uses are assembled from IndiaMART listings plus IIHR’s AMC
-        protocol. Doses on the bottle win if they differ.
+        Shop the brochure packs. Quote by crop and acres. No published price
+        list.
       </p>
-      <div className="mt-10 grid gap-px bg-forest/10 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="shop-grid mt-10">
         {products.map((p, i) => (
-          <div key={p.slug} className="bg-paper">
-            <ProductCard product={p} index={i} />
-          </div>
+          <ProductCard key={p.slug} product={p} index={i} />
         ))}
       </div>
     </div>

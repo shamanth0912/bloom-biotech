@@ -13,8 +13,8 @@ const desks = [
     metric: 4,
     unit: "routes",
     fill: 78,
-    detail: "Seed, drench, FYM mix, coco-peat. Doses, not 40% yield claims.",
-    tags: ["Seed", "Drench", "FYM", "Nursery"],
+    detail: "Drench 1 kg/40 L, FYM 5-10 kg/MT, drip, liquid 10 ml/L.",
+    tags: ["Drench", "FYM", "Drip", "Liquid"],
   },
   {
     id: "02",
@@ -23,8 +23,8 @@ const desks = [
     metric: products.length,
     unit: "SKUs",
     fill: 92,
-    detail: "Sanjiveeni, Bhu Samruddhi, Bluderma, Root Care for the board.",
-    tags: ["Sanjiveeni", "Bluderma", "Root Care"],
+    detail: "Sanjiveeni, Bhu Samruddhi, Bluderma, Bio Astra for the board.",
+    tags: ["Sanjiveeni", "Bluderma", "Astra"],
   },
   {
     id: "03",
@@ -39,11 +39,11 @@ const desks = [
   {
     id: "04",
     name: "Institutions",
-    href: "/products/arka-microbial-consortium",
+    href: "/products/bio-sanjiveeni",
     metric: 2,
     unit: "AMC forms",
     fill: 100,
-    detail: "Licence-backed AMC solid and liquid for KVKs and research.",
+    detail: "Bio Sanjiveeni powder and Bhu Samruddhi liquid. First AMC licence in India.",
     tags: ["IIHR", "KVK", "Solid + liquid"],
   },
 ];

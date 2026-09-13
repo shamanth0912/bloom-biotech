@@ -15,31 +15,31 @@ export function companyKnowledge(): KnowledgeChunk[] {
       id: "overview",
       title: "Company overview",
       href: "/about",
-      text: `${site.name} is a green biotechnology / agri-biotech company in Chikkamagaluru, Karnataka, India. It manufactures and supplies microbial biofertilizers, biocontrols, and soil-health inputs. Tagline: ${site.tagline}. ${site.description}`,
+      text: `${site.name} is a green biotechnology company in Chikkamagaluru, Karnataka. Started in 2013. Technological collaboration with the Indian Institute of Horticultural Research (IIHR / ICAR-IIHR). First company in India to licence Arka Microbial Consortium (AMC) and Arka Fermented Cocopeat. Licensed Arka Actino Consortium (ACT) in 2015. State-of-the-art production facility in Chikkamagaluru (coffee land). Mission: high-quality biotechnology products and technical assistance for higher yields at lower costs. 100% organic mark on IIHR licensed packs. Website ${site.website}. ${site.description}`,
     },
     {
       id: "contact",
-      title: "Contact, hours, and plant address",
+      title: "Contact and address",
       href: "/enquire",
-      text: `Phone ${site.phoneDisplay}. Email ${site.email}. Hours: ${site.hours}. WhatsApp is the fastest for quotes. Instagram ${site.instagram}. Address: ${site.addressLines.join(", ")}. Google rating ${site.googleRating} from ${site.googleReviews} reviews. Maps: ${site.maps}.`,
+      text: `Phone / customer care ${site.phoneDisplay}. Email ${site.email}. Hours: ${site.hours}. Address: ${site.addressLines.join(", ")}. Website ${site.website}. Instagram ${site.instagram}. Maps: ${site.maps}.`,
     },
     {
       id: "licence",
-      title: "ICAR-IIHR licence",
-      href: "/products/arka-microbial-consortium",
-      text: `Bloom Biotech is listed on ICAR-IIHR active technology licences for Arka Microbial Consortium (solid and liquid), contact name Suhas Mohan, Chikkamagaluru. AMC is an all-in-one inoculant: nitrogen-fixing, phosphorus and zinc solubilizing, and plant-growth promoting microbes. IIHR notes 5-15% vegetable yield gains and 25-30% lower N and P fertiliser need. Typical use: 10-20 g per 100-200 g seed; 1 kg AMC per tonne coco-peat; 20 g/L root-zone drench; 5 kg with 500 kg FYM per acre.`,
-    },
-    {
-      id: "audiences",
-      title: "Who we serve",
-      href: "/enquire",
-      text: `The website and plant serve farmers and growers (coffee, horticulture, field crops), dealers and distributors needing bulk quotes, plantation estates, and institutions such as KVKs and research partners.`,
+      title: "IIHR licences",
+      href: "/products/bio-sanjiveeni",
+      text: `Bloom Biotech has technological collaboration with IIHR. First in India to licence Arka Microbial Consortium (AMC) as Bio Sanjiveeni (carrier / powder) and Bhu Samruddhi (liquid AMC), and Arka Fermented Cocopeat (Bloom Compost Culture). Licensed Arka Actino Consortium (ACT) in 2015 as Bio Astra. AMC actives: Pseudomonas taiwanensis, Azotobacter tropicalis, Bacillus aryabhattai. Do not invent yield percentages. Do not publish prices. Bottle / pouch label wins if it differs from the brochure.`,
     },
     {
       id: "quote",
       title: "How to get a quote",
       href: "/enquire",
-      text: `Request a quote at /enquire or WhatsApp ${site.phoneDisplay}. Include crop, acres, and whether you need solid or liquid packs. This site captures enquiries for farmers, dealers, estates, and institutions. We do not run online checkout or published price lists on the website - prices are quoted by the plant.`,
+      text: `Request a quote at /enquire or WhatsApp ${site.phoneDisplay} or email ${site.email}. Include crop, area, and solid vs liquid. No published price list and no online checkout. Prices are quoted by the plant.`,
+    },
+    {
+      id: "mix",
+      title: "Mixing precautions",
+      href: "/products",
+      text: `AMC powder and compost culture: do not mix with antibiotics, pesticides, or insecticides. Bio Astra, Bluderma, Blumonas, Bio Vanish, Bio Erase, Bio Hit, Bio Ace: do not mix with fungicides, pesticides, or insecticides. Calcare: caution when mixing with high-phosphorus fertilizers. Store cool and dry, away from direct sunlight. NutriCare C2 and AscoGold: store below 25°C.`,
     },
   ];
 
@@ -48,7 +48,7 @@ export function companyKnowledge(): KnowledgeChunk[] {
       id: `product:${p.slug}`,
       title: p.name,
       href: `/products/${p.slug}`,
-      text: `${p.name} (${p.category}). ${p.short} Crops: ${p.crops.join(", ")}. Use: ${p.use}. Pack: ${p.pack}. ${p.body.join(" ")}`,
+      text: `${p.name} (${p.category}, ${p.technology}). Aliases: ${p.aliases.join(", ")}. ${p.short} Crops: ${p.crops.join(", ")}. Use: ${p.use}. Pack: ${p.pack}. Actives: ${p.actives}. CFU: ${p.cfu}. Targets: ${p.targets}. Usage: ${p.usage.map((u) => `${u.title}: ${u.text}`).join(" ")}. Precaution: ${p.precaution}. Storage: ${p.storage}. ${p.imported ? "Imported product. No repacking in India where stated." : ""} ${p.benefits?.join(" ") ?? ""} ${p.specs?.map((s) => `${s.label} ${s.value}`).join("; ") ?? ""} ${p.body.join(" ")}`,
     });
   }
 
@@ -64,7 +64,7 @@ export function companyKnowledge(): KnowledgeChunk[] {
   return chunks;
 }
 
-export function retrieveKnowledge(query: string, limit = 6) {
+export function retrieveKnowledge(query: string, limit = 8) {
   const q = query.toLowerCase();
   const terms = q.split(/[^a-z0-9+]+/).filter((t) => t.length > 2);
   const scored = companyKnowledge().map((chunk) => {
@@ -73,16 +73,12 @@ export function retrieveKnowledge(query: string, limit = 6) {
     for (const t of terms) {
       if (hay.includes(t)) score += 2;
     }
-    if (q.includes("where") && chunk.id === "contact") score += 8;
-    if (q.includes("phone") || q.includes("whatsapp") || q.includes("email")) {
-      if (chunk.id === "contact") score += 8;
-    }
-    if (q.includes("amc") || q.includes("arka") || q.includes("consortium")) {
-      if (chunk.id === "licence" || chunk.id.includes("arka")) score += 8;
-    }
-    if (q.includes("price") || q.includes("quote") || q.includes("cost")) {
-      if (chunk.id === "quote") score += 8;
-    }
+    if (/(where|phone|whatsapp|email|address|contact)/.test(q) && chunk.id === "contact")
+      score += 10;
+    if (/(amc|arka|consortium|sanjiv|licence|license|iihr)/.test(q) && chunk.id === "licence")
+      score += 8;
+    if (/(price|quote|cost)/.test(q) && chunk.id === "quote") score += 8;
+    if (/(mix|pesticide|fungicide)/.test(q) && chunk.id === "mix") score += 6;
     return { chunk, score };
   });
   return scored
